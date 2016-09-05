@@ -52,7 +52,7 @@
         margin: 0 auto 15px;
         a {
             font-family: Mrs Saint Delafield;
-            font-size: 70px;
+            font-size: 90px;
             text-decoration: none;
             text-shadow: 1px 1px 5px rgba($color-black, 0.3);
         }
@@ -159,6 +159,10 @@
 
 .site-footer p {
     margin: 0;
+}
+.poweredby {
+    font-size: 8px;
+
 }
 
 .site-footer:before {

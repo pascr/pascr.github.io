@@ -1,31 +1,20 @@
 ---
 layout:    about
 permalink: "/about/"
-author:    jwillmer
-keywords:  about person demo example
-title:     About Jens Willmer
+author:    pascr
+keywords:  about pascal rodriguez
+title:     About Pascal Rodriguez
 menutitle: About
 weight:    90
 excerpt:   This page contains the curriculum vitae (CV) of the author.
 ---
 
-## Profile
+## About me
 
-Integer sit amet libero non sapien sagittis dapibus. Phasellus gravida quam ac nisl finibus dictum. Pellentesque vel orci et nisi pretium tincidunt nec a diam. Vivamus et leo eu lorem congue pellentesque id sed tortor. Nulla et nibh neque. Sed ut fermentum lectus, id rhoncus erat.
+My name is Pascal Rodriguez, I am an enthusiast software engineer living in London.
 
----
+I am currently leading the development of a software as a service video platform at EaselTV mainly based on Scala, Akka and the Play framework.
 
-## Skills
 
-- Praesent ac augue imperdiet, interdum purus id, sollicitudin sem.
-- Sed pellentesque urna a magna suscipit volutpat.
-- Donec ultricies lectus non augue dictum hendrerit ac ac lorem.
-- Integer eget dui eu purus luctus posuere in non metus.
-- Nam ac felis eget tortor blandit gravida non et diam.
-
----
-
-## Education
-
-2009 - 2012
-: Mauris vitae velit vel leo suscipit tempus vel vel elit.
+The Disclaimer below applies to all of my blog entries.
+> The information in this weblog is provided “AS IS” with no warranties, and confers no rights. This weblog does not represent the thoughts, intentions, plans or strategies of my employer. It is solely my opinion. My thoughts and opinions change from time to time as I come to learn and develop my understanding about the things and issues that I am blogging about. This blog just provides a snapshot of the knowledge, views, and opinions that I hold at a particular point of time and these might most probably change over a period of time. I reserve the right to evolve my knowledge, thoughts, and viewpoints over time and to change them without assigning any reason.

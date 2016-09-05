@@ -1,16 +1,16 @@
 default:                                                      # Fallback if nothing is specified
-  initial:      jwillmer                                      # used for author lookup in posts and for first two characters in the about page back button
-  name:         "Jens Willmer"                                # used to display author name
-  cover:        /assets/mountain-alternative-cover.jpg        # OPTIONAL: defines location of cover image in about page
-  picture:      /assets/jwillmer.jpg                          # OPTIONAL: author picture
-  bio:          All about technology                          # OPTIONAL: text below author name in posts
-  location:     Germany                                       # OPTIONAL: used to display location of the author
-  website:      "http://jwillmer.de/about"                    # OPTIONAL: link to the author of a post
+  initial:      pascr                                         # used for author lookup in posts and for first two characters in the about page back button
+  name:         "Pascal Rodriguez"                            # used to display author name
+  cover:        /assets/alps-cover.jpg                        # OPTIONAL: defines location of cover image in about page
+  picture:      /assets/pascr.jpg                             # OPTIONAL: author picture
+  bio:          Building software one slice at a time         # OPTIONAL: text below author name in posts
+  location:     London                                        # OPTIONAL: used to display location of the author
+  website:      "http://sliceofcode.net/about"                # OPTIONAL: link to the author of a post
   email:                                                      # OPTIONAL: used in the about page
-  twitter:      jenswillmer                                   # OPTIONAL: used in the about page
+  twitter:      pasc_r                                        # OPTIONAL: used in the about page
   linkedin:                                                   # OPTIONAL: used in the about page
   xing:                                                       # OPTIONAL: used in the about page
-  github:       jwillmer                                      # OPTIONAL: used in the about page
+  github:       pascr                                         # OPTIONAL: used in the about page
   stackoverflow:                                              # OPTIONAL: used in the about page
   facebook:                                                   # OPTIONAL: used in the about page
   gplus:                                                      # OPTIONAL: used in the about page
@@ -19,13 +19,14 @@ default:                                                      # Fallback if noth
   pinterest:                                                  # OPTIONAL: used in the about page
   dribble:                                                    # OPTIONAL: used in the about page
   behance:                                                    # OPTIONAL: used in the about page
-jwillmer:
-  initial:      jwillmer
-  name:         "Jens Willmer"        
-  cover:        /assets/mountain-alternative-cover.jpg  
-  picture:      /assets/jwillmer.jpg  
-  bio:          All about technology 
-  location:     Germany 
-  website:      "http://jwillmer.de/about" 
-  twitter:      jenswillmer
-  github:       jwillmer
+pascr:
+  initial:      pascr
+  name:         "Pascal Rodriguez"
+  cover:        /assets/alps-cover.jpg
+  picture:      /assets/pascr.jpg
+  bio:          Building software one slice at a time
+  location:     London
+  website:      "http://sliceodcode.net/about"
+  twitter:      pasc_r
+  github:       pascr
+  linkedin:     pascr
