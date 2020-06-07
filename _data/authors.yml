@@ -4,11 +4,11 @@ default:                                                      # Fallback if noth
   cover:        /assets/alps-cover.jpg                        # OPTIONAL: defines location of cover image in about page
   picture:      /assets/pascr.jpg                             # OPTIONAL: author picture
   bio:          Building software one slice at a time         # OPTIONAL: text below author name in posts
-  location:     London                                        # OPTIONAL: used to display location of the author
+  location:     Lausanne, Switzerland                         # OPTIONAL: used to display location of the author
   website:      "http://sliceofcode.net/about"                # OPTIONAL: link to the author of a post
   email:                                                      # OPTIONAL: used in the about page
   twitter:      pasc_r                                        # OPTIONAL: used in the about page
-  linkedin:                                                   # OPTIONAL: used in the about page
+  linkedin:     pascr                                         # OPTIONAL: used in the about page
   xing:                                                       # OPTIONAL: used in the about page
   github:       pascr                                         # OPTIONAL: used in the about page
   stackoverflow:                                              # OPTIONAL: used in the about page
