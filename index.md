@@ -1,7 +1,7 @@
 ---
 layout:    about
 author:    pascr
-keywords:  about pascal rodriguez lausanne scala Software engineer
+keywords:  about pascal rodriguez lausanne scala director engineering
 title:     About Pascal Rodriguez
 menutitle: About
 weight:    90
@@ -12,16 +12,48 @@ excerpt:   This page contains the curriculum vitae (CV) of Pascal Rodriguez.
 
 I am a creative and passionate software engineer. Eager to learn and apply new cutting edge technologies and methodologies. Well organized, proactive, problem solving oriented and able to work under pressure, I enjoy international environments and to provide a great team spirit. I am particularly interested in distributed systems, high performance applications and functional programming.
 
-I am currently leading the development of a fleet orchestration SaaS platform at Bestmile mainly based on Scala, Akka, Kafka, Kubernetes and AWS.
 
 ## Experience
 
+### Visium SA, Lausanne, Switzerland
+<dl>
+<dt>06.2022 - present</dt>
+<dd>Engineering Director</dd>
+</dl>
+Just started :-)
+
+### ZF Group, Bern, Switzerland
+<dl>
+<dt>08.2021 - 06.2022</dt>
+<dd>Director of Product Engineering</dd>
+</dl>
+Transitioning the Bestmile engineering teams and technology into a new home.
+Following the acquisition of the Bestmile IP and hiring of Bestmile's engineering teams, ensuring a smooth and happy transition for individuals and efficient integration of the products into the ZF digital portfolio.
+
+see [Bestmile's technology was acquired by ZF Group](https://press.zf.com/press/en/releases/release_32320.html)
+
+
 ### Bestmile, Lausanne, Switzerland
 <dl>
-<dt>03.2017 - present</dt>
+<dt>03.2017 - 10.2021</dt>
 <dd>Director of Engineering</dd>
 </dl>
 Designing and leading the development of the world’s first cloud platform for the operation and optimization of autonomous vehicle fleets allowing the management of mixed fleet composed of vehicles of different types and brands also handling hybrid fleets comprise of both autonomous vehicles and human-driven vehicles.
+
+* Oversaw all aspects of engineering operations and the architecture and design of the platform from a software engineering and cloud infrastructure point-of-view.
+* Shaped the agile mindset of the company in both quality and delivery by defining and adapting the process from feature inception to deployment across teams and technologies.
+* Contributed to the product strategy and roadmap, following market and investors’ requirements.
+* Coordinated the development of new features from inception to maintenance working closely with internal and external stakeholders such as customers, product managers and the delivery teams.
+* Introduced the “you build it; you run it” philosophy, enabling teams to own the delivery of their code up to production through continuous delivery pipelines.
+* Defined engineering KPIs to measure team engagement, velocity, and quality of deliveries.
+* Initiated the migration to Infrastructure-as-Code of the entire cloud infrastructure.
+* Managed multiple integration projects with external partners.
+* Introduced Domain-Driven Design and event-storming techniques to identify and scope micro-services responsibilities with their respective domain events used for communication.
+* Organically grew the team from 1 to 12 engineers.
+* Followed the development of team members through one-to-ones and OKRs.
+* Encouraged a continuous learning and knowledge-sharing culture among the teams.
+* Actively participated in 3 funding rounds and due diligence processes.
+
 
 ### Easel TV, London, United Kingdom
 <dl>
