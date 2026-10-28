@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Build the hero illustration (_includes/ridge.svg) from the Alps photo.
 
-The photo's skyline is traced (the sky is a smooth gradient, the ridge a hard
-edge) and its peaks, their positions and relative heights, become clean
-triangular mountains in three depth layers: lit face, shadow face split by a
-vertical under the apex, notched snow cap. A red sun, a flat lake with the
-range mirrored into it, a shore band, and a red dotted ski-touring track with a
-flag on the highest summit complete the scene.
+Monoline hatching, in the manner of a vintage print: the photo's skyline is
+traced (the sky is a smooth gradient, the ridge a hard edge) and simplified
+into a clean outline; the mass is split into faces at peaks and valleys and
+each face is filled with parallel hatch lines, horizontal for lit faces,
+diagonal for shadow faces. A far range in sparser hatch, a hatched lake and a red dotted ski-touring track
+to a flag on the summit complete the scene. One line colour (currentColor), so it
+follows the light and dark themes.
 
     python3 scripts/ridge_from_photo.py
 
-Colours live in _sass/_tokens.scss. Requires Pillow and numpy.
+Requires Pillow and numpy.
 """
+import random
 import numpy as np
 from PIL import Image
 from pathlib import Path
@@ -23,9 +25,11 @@ OUT = ROOT / "_includes" / "ridge.svg"
 HORIZON_SRC = 512.0
 VB_W, VB_H = 1600.0, 1000.0
 HORIZON = 700.0
-EXAG = 4.6            # vertical exaggeration of the traced heights
-SNOW = 0.3            # snow cap, as a fraction of each peak's height
-FLANK_L, FLANK_R = 0.78, 0.62   # half-widths of a peak's base, per unit of height (left / right)
+EXAG = 4.6              # vertical exaggeration of the traced heights
+SIMPLIFY = 9.0          # outline tolerance
+PROMINENCE = 70         # minimum drop around a peak for it to get its own face
+SLANT = 0.34            # how far the divider from a peak leans to the right per unit of height
+SEED = 11
 
 
 def trace(photo):
@@ -49,104 +53,176 @@ def smooth(ys, k):
     return np.convolve(np.pad(ys, k, mode="edge"), np.ones(2 * k + 1) / (2 * k + 1), mode="valid")
 
 
-def peaks(ys, k, min_sep, min_h, exag=EXAG):
-    """Local maxima of the smoothed skyline as (x, apex_y), tallest first within min_sep."""
-    s = smooth(ys, k)
-    h = (HORIZON_SRC - s) * exag            # drawn height above the horizon
-    cand = [x for x in range(1, len(h) - 1) if h[x] >= h[x - 1] and h[x] > h[x + 1] and h[x] >= min_h]
-    cand.sort(key=lambda x: -h[x])
-    chosen = []
-    for x in cand:
-        if all(abs(x - c) >= min_sep for c in chosen):
-            chosen.append(x)
-    return sorted((float(x), HORIZON - float(h[x])) for x in chosen)
+def rdp(points, eps):
+    if len(points) < 3:
+        return points
+    (x1, y1), (x2, y2) = points[0], points[-1]
+    dx, dy = x2 - x1, y2 - y1
+    norm = (dx * dx + dy * dy) ** 0.5 or 1
+    dmax, idx = 0, 0
+    for i in range(1, len(points) - 1):
+        x, y = points[i]
+        d = abs(dy * x - dx * y + x2 * y1 - y2 * x1) / norm
+        if d > dmax:
+            dmax, idx = d, i
+    if dmax > eps:
+        return rdp(points[:idx + 1], eps)[:-1] + rdp(points[idx:], eps)
+    return [points[0], points[-1]]
+
+
+def to_draw(y, exag=EXAG):
+    return HORIZON - (HORIZON_SRC - y) * exag
+
+
+def outline(ys, eps, exag):
+    pts = [(-40.0, to_draw(ys[0], exag))] + [(float(x), to_draw(ys[x], exag)) for x in range(len(ys))] + [(VB_W + 40, to_draw(ys[-1], exag))]
+    return rdp(pts, eps)
+
+
+def extrema(pts, prominence):
+    """Indices of peaks (with enough drop on both sides) and the valleys between them."""
+    n = len(pts)
+    peaks = []
+    for i in range(1, n - 1):
+        if pts[i][1] <= pts[i - 1][1] and pts[i][1] < pts[i + 1][1]:
+            left = max(p[1] for p in pts[:i]) if i else pts[i][1]
+            right = max(p[1] for p in pts[i + 1:])
+            # drop until the outline next climbs above this peak
+            def drop(side):
+                best = pts[i][1]
+                rng = range(i - 1, -1, -1) if side < 0 else range(i + 1, n)
+                for j in rng:
+                    if pts[j][1] < pts[i][1]:
+                        break
+                    best = max(best, pts[j][1])
+                return best - pts[i][1]
+            if drop(-1) >= prominence and drop(1) >= prominence:
+                peaks.append(i)
+    ext = []
+    for a, b in zip(peaks, peaks[1:]):
+        v = max(range(a, b + 1), key=lambda j: pts[j][1])
+        ext.append((a, "peak")); ext.append((v, "valley"))
+    if peaks:
+        ext.append((peaks[-1], "peak"))
+    return ext
 
 
 def fmt(points):
     return " ".join("%.0f,%.1f" % p for p in points)
 
 
-def mountain(px, py, fl=FLANK_L, fr=FLANK_R, snow=SNOW, cls=""):
-    """One peak: lit polygon, shadow polygon, snow cap (lit and shadow halves)."""
-    h = HORIZON - py
-    wl, wr = h * fl, h * fr
-    base_l, base_r = (px - wl, HORIZON), (px + wr, HORIZON)
-    out = [f'<polygon class="{cls}lit" points="{fmt([(px, py), base_r, base_l])}"/>',
-           f'<polygon class="{cls}shadow" points="{fmt([(px, py), base_r, (px, HORIZON)])}"/>']
-    if snow:
-        sy = py + h * snow                       # bottom of the cap
-        xl, xr = px - wl * snow, px + wr * snow  # cap corners on the flanks
-        notch = h * snow * 0.32
-        # notched underside: down-up-down zigzag across the cap
-        cap = [(px, py), (xr, sy), (xr - (xr - px) * 0.5, sy - notch), (px, sy + notch * 0.2),
-               (px - (px - xl) * 0.5, sy - notch), (xl, sy)]
-        out.append(f'<polygon class="{cls}snow" points="{fmt(cap)}"/>')
-        cap_r = [(px, py), (xr, sy), (xr - (xr - px) * 0.5, sy - notch), (px, sy + notch * 0.2)]
-        out.append(f'<polygon class="{cls}snow-shadow" points="{fmt(cap_r)}"/>')
-    return "".join(out)
+def faces(pts, ext):
+    """Split the mass into faces between consecutive dividers; returns (polygon, kind) pairs."""
+    dividers = [(-40.0, -40.0, 0)]          # (top x index proxy, bottom x, index) -> use indices
+    divs = []
+    for idx, kind in ext:
+        x, y = pts[idx]
+        if kind == "peak":
+            bottom = x + SLANT * (HORIZON - y)
+        else:
+            bottom = x
+        divs.append((idx, bottom, kind))
+    # keep dividers in order and non-crossing
+    cleaned = []
+    for d in divs:
+        if cleaned and d[1] <= cleaned[-1][1] + 30:
+            continue
+        cleaned.append(d)
+    out = []
+    prev_idx, prev_bottom = 0, pts[0][0]
+    lit = True
+    for idx, bottom, kind in cleaned + [(len(pts) - 1, pts[-1][0], "end")]:
+        seg = pts[prev_idx:idx + 1]
+        polygon = seg + [(bottom, HORIZON), (prev_bottom, HORIZON)]
+        # the face that ends at a peak climbs: lit. The face that ends at a valley descends: shadow.
+        out.append((polygon, "lit" if kind == "peak" else "shadow"))
+        prev_idx, prev_bottom = idx, bottom
+    return out
 
 
-def skin_track(px, py, fl=FLANK_L):
-    """Switchbacks up the lit face to the apex."""
-    h = HORIZON - py
-    pts = []
+def pine(x, h, rng):
+    w = h * 0.42
+    top = (x, VB_H - h)
+    base_l, base_r = (x - w, VB_H + 2), (x + w, VB_H + 2)
+    branches = []
+    for k in range(1, 6):
+        t = k / 6
+        yy = top[1] + h * t
+        branches.append(f'<line x1="{x:.0f}" y1="{yy:.0f}" x2="{x - w * t * 0.92:.0f}" y2="{yy + h * 0.06:.0f}"/>')
+        branches.append(f'<line x1="{x:.0f}" y1="{yy:.0f}" x2="{x + w * t * 0.92:.0f}" y2="{yy + h * 0.06:.0f}"/>')
+    return (f'<g class="pine"><polygon points="{fmt([top, base_r, base_l])}"/>'
+            f'<line x1="{x:.0f}" y1="{top[1] + 10:.0f}" x2="{x:.0f}" y2="{VB_H:.0f}"/>{"".join(branches)}</g>')
+
+
+def skin_track(pts, summit_idx):
+    """Switchbacks up the slope left of the summit."""
+    sx, sy = pts[summit_idx]
+    h = HORIZON - sy
+    def slope_x(y):   # x of the outline left of the summit at height y
+        for j in range(summit_idx, 0, -1):
+            (x1, y1), (x2, y2) = pts[j - 1], pts[j]
+            if min(y1, y2) <= y <= max(y1, y2) and y1 != y2:
+                return x1 + (x2 - x1) * (y - y1) / (y2 - y1)
+        return sx - 0.6 * (y - sy)
+    out = []
     n = 7
     for i in range(n + 1):
         t = i / n
-        y = HORIZON - 30 - (h - 30) * t
-        width = fl * (y - py)                  # lit face width at this height
-        x = px - width * (0.72 if i % 2 == 0 else 0.22)
-        pts.append((x, y))
-    pts[-1] = (px, py + 2)
-    return "M" + " L".join("%.0f %.1f" % p for p in pts)
+        y = HORIZON - 40 - (h - 40) * t
+        edge = slope_x(y)
+        width = max(sx - edge, 30)
+        x = sx - width * (0.78 if i % 2 == 0 else 0.25)
+        out.append((x, y))
+    out[-1] = (sx, sy + 2)
+    return "M" + " L".join("%.0f %.1f" % p for p in out)
 
 
 def main():
+    rng = random.Random(SEED)
     r = trace(PHOTO)
-    main_pk = peaks(r, 18, 170, 190)
-    mid_pk = [(x - 90, y + (HORIZON - y) * 0.42) for x, y in peaks(r, 40, 120, 120)]
-    far_pk = [(x + 60, y + (HORIZON - y) * 0.62) for x, y in peaks(smooth(r, 30) - 20, 70, 200, 90)]
-    summit = min(main_pk, key=lambda p: p[1])
+    pts = outline(r, SIMPLIFY, EXAG)
+    ext = extrema(pts, PROMINENCE)
+    main_faces = faces(pts, ext)
+    summit_idx = min(range(len(pts)), key=lambda i: pts[i][1])
+    far = outline(smooth(r, 70) - 46, 10, EXAG * 0.8)
+    far_poly = far + [(far[-1][0], HORIZON), (far[0][0], HORIZON)]
 
-    def layer(pks, cls, fl, fr, snow):
-        return "".join(mountain(px, py, fl, fr, snow, cls) for px, py in sorted(pks, key=lambda p: -p[1]))
+    def ridge_y(x):
+        for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
+            if x1 <= x <= x2:
+                return y1 + (y2 - y1) * (x - x1) / ((x2 - x1) or 1)
+        return HORIZON
+    sx, sy = pts[summit_idx]
 
-    sun_x, sun_y = summit[0] + 250, summit[1] + 100
-    shore_d = "M-120 920 Q 800 948 1720 926 L1720 1100 L-120 1100 Z"
     svg = f'''<svg class="ridge" viewBox="0 0 {VB_W:.0f} {VB_H:.0f}" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
     <defs>
-        <linearGradient id="ridge-fade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#fff" stop-opacity="0.55"/>
-            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-        </linearGradient>
-        <mask id="ridge-reflection-mask"><rect x="-40" y="{HORIZON:.0f}" width="{VB_W + 80:.0f}" height="{VB_H - HORIZON:.0f}" fill="url(#ridge-fade)"/></mask>
+        <pattern id="hatch-h" width="12" height="12" patternUnits="userSpaceOnUse"><line x1="0" y1="6" x2="12" y2="6"/></pattern>
+        <pattern id="hatch-d" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="6" x2="12" y2="6"/></pattern>
+        <pattern id="hatch-far" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(-60)"><line x1="0" y1="8" x2="16" y2="8"/></pattern>
+        <pattern id="hatch-water" width="20" height="26" patternUnits="userSpaceOnUse"><line x1="0" y1="13" x2="20" y2="13"/></pattern>
     </defs>
-    <g class="ridge-sky" data-parallax="0.15">
-        <circle class="ridge-sun" cx="{sun_x:.0f}" cy="{sun_y:.0f}" r="78"/>
+    <g class="ridge-far" data-parallax="0.35">
+        <polygon class="far" points="{fmt(far_poly)}"/>
     </g>
-    <g class="ridge-far2" data-parallax="0.3">{layer(far_pk, "far2-", 1.6, 1.3, 0)}</g>
-    <g class="ridge-far1" data-parallax="0.45">{layer(mid_pk, "far1-", 1.05, 0.85, 0)}</g>
     <g class="ridge-main" data-parallax="0.75">
-        {layer(main_pk, "", FLANK_L, FLANK_R, SNOW)}
+        {"".join('<polygon class="face face-%s" points="%s"/>' % (kind, fmt(poly)) for poly, kind in main_faces)}
+        <polyline class="outline" points="{fmt(pts)}"/>
         <g class="ridge-track">
-            <path d="{skin_track(summit[0], summit[1])}"/>
-            <g class="ridge-flag" transform="translate({summit[0]:.0f} {summit[1]:.1f})">
-                <line x1="0" y1="0" x2="0" y2="-58"/>
-                <polygon points="0,-58 36,-47 0,-36"/>
+            <path d="{skin_track(pts, summit_idx)}"/>
+            <g class="ridge-flag" transform="translate({sx:.0f} {sy:.1f})">
+                <line x1="0" y1="0" x2="0" y2="-56"/>
+                <polygon points="0,-56 34,-46 0,-36"/>
             </g>
         </g>
     </g>
     <g class="ridge-water" data-parallax="-0.4">
-        <rect class="ridge-lake" x="-40" y="{HORIZON:.0f}" width="{VB_W + 80:.0f}" height="{VB_H - HORIZON + 40:.0f}"/>
-        <g class="ridge-reflection" mask="url(#ridge-reflection-mask)">
-            <g transform="translate(0 {HORIZON:.0f}) scale(1 -0.4) translate(0 {-HORIZON:.0f})">{layer(main_pk, "", FLANK_L, FLANK_R, 0)}</g>
-        </g>
+        <rect class="lake" x="-40" y="{HORIZON:.0f}" width="{VB_W + 80:.0f}" height="{VB_H - HORIZON + 40:.0f}"/>
+        <line class="horizon" x1="-40" y1="{HORIZON:.0f}" x2="{VB_W + 40:.0f}" y2="{HORIZON:.0f}"/>
     </g>
-    <g class="ridge-shore" data-parallax="1"><path d="{shore_d}"/></g>
 </svg>
 '''
     OUT.write_text(svg)
-    print(f"wrote {OUT.relative_to(ROOT)} ({len(svg)} bytes): main peaks {[(int(x), int(HORIZON - y)) for x, y in main_pk]}, mid {len(mid_pk)}, far {len(far_pk)}")
+    print(f"wrote {OUT.relative_to(ROOT)} ({len(svg)} bytes): {len(pts)} outline points, {len(main_faces)} faces")
 
 
 if __name__ == "__main__":
