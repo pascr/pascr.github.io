@@ -1,33 +1,45 @@
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f3efe6" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
 
-    <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+    {% if page.url == "/" %}{% assign page_title = site.title | append: " · " | append: page.title %}{% elsif page.title %}{% assign page_title = page.title | append: " · " | append: site.title %}{% else %}{% assign page_title = site.title %}{% endif %}
+    <title>{{ page_title | escape }}</title>
     <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-  
-    {% if page.tags %}
-    <meta name="keywords" content="{{ page.tags | join: ', ' | escape }}" />
+
+    {% if page.tags.size > 0 %}
+    <meta name="keywords" content="{{ page.tags | join: ', ' | escape }}">
     {% elsif page.keywords %}
-    <meta name="keywords" content="{{ page.keywords | split: ' ' | join: ', ' | escape }}" />
-	{% elsif site.keywords %}
-    <meta name="keywords" content="{{ site.keywords | split: ' ' | join: ', ' | escape }}" />
+    <meta name="keywords" content="{{ page.keywords | split: ' ' | join: ', ' | escape }}">
+    {% elsif site.keywords %}
+    <meta name="keywords" content="{{ site.keywords | split: ' ' | join: ', ' | escape }}">
     {% endif %}
-
-    <meta name="HandheldFriendly" content="True">
     <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow">
-	
-    {% include ogp.html %}	
-	{% include twitter-meta.html %}	
+    <link rel="canonical" href="{{ page.url | replace: 'index.html', '' | absolute_url }}">
 
-    <link href='https://fonts.googleapis.com/css?family=Mrs+Saint+Delafield|Merriweather:300italic,700,300,700italic|Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="{{ "/css/screen.css" | prepend: site.github.url | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/css/prism.css" | prepend: site.github.url | prepend: site.baseurl}}">
-    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.github.url | prepend: site.baseurl }}">
+    {% include ogp.html %}
+    {% include twitter-meta.html %}
 
-    <link rel="icon" href="{{ "/assets/favicon-16.png" | prepend: site.github.url | prepend: site.baseurl}}" sizes="16x16" type="image/png">
-    <link rel="icon" href="{{ "/assets/favicon-32.png" | prepend: site.github.url | prepend: site.baseurl}}" sizes="32x32" type="image/png">
-    <link rel="icon" href="{{ "/assets/favicon-96.png" | prepend: site.github.url | prepend: site.baseurl}}" sizes="48x48" type="image/png">
+    <script>
+      /* Flag JS availability and apply the saved theme before first paint. */
+      document.documentElement.classList.add('js');
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark' || t === 'light') { document.documentElement.setAttribute('data-theme', t); }
+        } catch (e) {}
+      })();
+    </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/css/screen.css' | relative_url }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+
+    <link rel="icon" href="{{ '/assets/favicon-16.png' | relative_url }}" sizes="16x16" type="image/png">
+    <link rel="icon" href="{{ '/assets/favicon-32.png' | relative_url }}" sizes="32x32" type="image/png">
+    <link rel="icon" href="{{ '/assets/favicon-96.png' | relative_url }}" sizes="96x96" type="image/png">
 </head>

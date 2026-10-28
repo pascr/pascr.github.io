@@ -1,0 +1,98 @@
+---
+layout: default
+---
+{% assign author = site.data.authors[page.author] | default: site.data.authors['default'] %}
+{% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
+{% assign first_year = site.data.experience | map: "year" | sort | first %}
+{% assign years = site.time | date: "%Y" | minus: first_year %}
+{% assign readme = site.pages | where: "menutitle", "Readme" | first %}
+
+<section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+        <p class="hero-kicker mono"><span class="hero-dot" aria-hidden="true"></span>{{ author.role }}</p>
+
+        <figure class="hero-figure" data-reveal>
+            <img class="hero-cover" src="{{ author.cover | relative_url }}" alt="Lake Geneva at dusk, with the Alps on the horizon, seen from Lausanne" width="1600" height="900" fetchpriority="high">
+            <svg class="hero-cut" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <line x1="0" y1="100" x2="27" y2="-42.1" vector-effect="non-scaling-stroke"/>
+            </svg>
+            <img class="hero-portrait" src="{{ author.picture | relative_url }}" alt="Portrait of {{ author.name }}" width="400" height="400" loading="lazy">
+        </figure>
+
+        <h1 id="hero-title" class="hero-title">
+            <span class="hero-title-line">Pascal</span>
+            <span class="hero-title-line">Rodriguez</span>
+        </h1>
+
+        <p class="hero-lede">
+            Building software <em>one slice at a time</em>. Distributed systems, functional programming
+            and the teams that make them work, from the shore of Lake Geneva.
+        </p>
+
+        <dl class="hero-meta mono">
+            <div><dt>Based in</dt><dd>{{ author.location }}</dd></div>
+            <div><dt>Coordinates</dt><dd>{{ author.coordinates }}</dd></div>
+            <div><dt>Shipping since</dt><dd>{{ first_year }} <span class="muted">/ {{ years }} yrs</span></dd></div>
+            <div><dt>Elsewhere</dt><dd>{% include social-links.html author=author compact=true %}</dd></div>
+        </dl>
+    </div>
+</section>
+
+<section id="about" class="section" aria-labelledby="about-title" data-reveal>
+    <div class="wrap section-grid">
+        <header class="section-head">
+            <span class="section-index mono">01</span>
+            <h2 id="about-title" class="section-title">About</h2>
+        </header>
+        <div class="section-body prose prose--lead">
+            {{ content }}
+            <p class="interests mono">
+                <span>distributed systems</span><span>functional programming</span><span>high performance</span><span>cloud infrastructure</span><span>engineering culture</span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section id="experience" class="section section--xp" aria-labelledby="xp-title">
+    <div class="wrap section-grid">
+        <header class="section-head" data-reveal>
+            <span class="section-index mono">02</span>
+            <h2 id="xp-title" class="section-title">Experience</h2>
+            <p class="section-note mono">{{ site.data.experience | size }} chapters, {{ first_year }} to today</p>
+        </header>
+        <div class="section-body">
+            {% include experience.html %}
+        </div>
+    </div>
+</section>
+
+<section id="writing" class="section" aria-labelledby="writing-title" data-reveal>
+    <div class="wrap section-grid">
+        <header class="section-head">
+            <span class="section-index mono">03</span>
+            <h2 id="writing-title" class="section-title">Writing</h2>
+            <p class="section-note mono">{{ posts | size }} posts, <a href="{{ '/feed.xml' | relative_url }}">RSS</a></p>
+        </header>
+        <div class="section-body">
+            {% include post-list.html posts=posts %}
+        </div>
+    </div>
+</section>
+
+{% if readme %}
+<section id="readme" class="section section--readme" aria-labelledby="readme-title" data-reveal>
+    <div class="wrap section-grid">
+        <header class="section-head">
+            <span class="section-index mono">04</span>
+            <h2 id="readme-title" class="section-title">Readme</h2>
+        </header>
+        <div class="section-body">
+            <blockquote class="pull">
+                <p>We trust each other. You're very good at your job. I'm not very good at your job. We win together, we fail together.</p>
+            </blockquote>
+            <p class="readme-blurb">A user manual for working with me: my guiding principles, how I work as a human, and what I value in others.</p>
+            <a class="button" href="{{ readme.url | relative_url }}">Read the manual <span class="button-arrow" aria-hidden="true">→</span></a>
+        </div>
+    </div>
+</section>
+{% endif %}

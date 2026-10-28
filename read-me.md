@@ -3,22 +3,27 @@ layout:    page
 author:    pascr
 keywords:  about pascal rodriguez readme
 title:     Pascal Rodriguez's Readme
-menutitle: My ReadMe
-weight:    90
-excerpt:   Pascal Rodriguez's personal user guide
+menutitle: Readme
+kicker:    A user manual for working with me
+weight:    40
+permalink: /readme/
+redirect_from:
+  - /read-me/
+excerpt:   Pascal Rodriguez's personal user guide. Guiding principles, how I work as a human, and what I value in others.
+numbered:  true
 ---
 
-# About this document.
+## About this document.
 
 If you start working with a new person, wouldn’t it be nice if you had some sort of user guide that gives you a basic understanding of how to work with them? This document’s purpose is exactly that. It captures my guiding principles, how I work as a human, and what I value in others.
 
-# Why am I here?
+## Why am I here?
 
 I am here to help you and support you. My job is to provide the necessary context on what you are working on. I also represent you and the team to the rest of the company. 
 
 My goal is for our team to be efficient, productive, happy, and successful.
 
-# My assumptions
+## My assumptions
 
 **We trust each other:** I will assume good intent whatever you do. I trust that you know what you’re doing and that you will let me know when you need my help. I believe that we will not be able to succeed if we can’t trust each other. My default mode of working will always be that I trust you and that you trust me.
 
@@ -32,7 +37,7 @@ My goal is for our team to be efficient, productive, happy, and successful.
 
 **We are a team; We win together, we fail together:** People who like to claim credit and assign blame are a major turnoff for me. We will make mistakes sometimes and I expect each of us to own them. In turn, you should expect me to have your back 100% of the time. I will never throw anyone under the bus and I expect the same from you.
 
-# What I value
+## What I value
 
 **Context-awareness**. Nothing that we do happens in a vacuum. In fact, making the right decisions is foremost about understanding the context we’re operating in. This can be anything from interpersonal to organization-wide, from understanding customer needs to market forces and policy constraints.
 
@@ -48,7 +53,7 @@ My goal is for our team to be efficient, productive, happy, and successful.
 
 **Empathy**. Not just towards those who you work with, but anybody. We’re all humans, and oftentimes, you see things more clearly when you take someone else’s perspective.
 
-# How to efficiently work and communicate with me
+## How to efficiently work and communicate with me
 
 **Please don’t hold back:** Challenge my ideas and opinions. Direct, candid feedback, ideally in the moment or directly after you have seen something you did not appreciate. Even better if you provide a suggestion on how I could improve. I appreciate positive feedback – if there is a valid reason for it.
 
@@ -68,11 +73,11 @@ My goal is for our team to be efficient, productive, happy, and successful.
 
 **Let’s have fun**. We’re not here for fun, but that doesn’t mean we shouldn’t have some and enjoy what we do.
 
-# My availability
+## My availability
 
 Very few things are more important to me than having a conversation with you. If you want to talk, let’s talk. Have you heard a rumor? Do you need more clarification? Is something blocking your work? I prefer to know about these things sooner rather than later. Come by my place or write me a message. There is no reason to wait for the next One-On-One. You can also book an appointment on my calendar at any time. I have a demanding job, and my calendar tends to fill up quickly. I can only think of a few things that might be more important than being there for you if you need me. So please don't be shy and let me know if you need my help. I promise you that I will take time for you whenever possible.
 
-# One-On-Ones
+## One-On-Ones
 
 Our One-On-One is your space where you can talk about anything you want. The meetings are primarily for you. Let me know how you feel, what you need, and other essential wishes. Share your thoughts about the team or your teammates and what your goals are. 
 
@@ -80,7 +85,7 @@ For me, One-On-Ones are not status meetings unless you want to talk about the st
 
 I will reserve some time every two weeks for you to meet. If you need additional time, let me know, and I will adapt to your wishes. From experience, it makes sense to note down a few things you want to talk about in advance.
 
-# Feedback
+## Feedback
 
 I always want to give you clear and timely feedback and hope that you do the same for me. If you have feedback for me, please share it with me. It could be something you liked and want to see more of. It could also be something you thought I could do better. Maybe I screwed up. In any case, I want to learn more from you. If you have the feeling that I would rather not hear something, then I would like to know why you think so. If we give each other feedback, those three points should be kept in mind:
 
@@ -90,7 +95,7 @@ I always want to give you clear and timely feedback and hope that you do the sam
 
 I prefer a personal conversation. Should it happen that you would like to start a discussion over e-mail or any other channel, I prefer that rather than not bringing it up.
 
-# There is life beyond work
+## There is life beyond work
 
 Let’s agree that work isn’t everything and that we can only be our best selves at work when we take care of ourselves and our loved ones. Our work is important to us. But there’s life beyond work, we have our obligations and the occasional unexpected challenge. And sometimes, we need to prioritize those.
 

@@ -1,0 +1,31 @@
+<ol class="xp">
+    {% for job in site.data.experience %}
+    <li class="xp-item{% if job.current %} is-current{% endif %}" data-reveal>
+        <div class="xp-when">
+            <span class="xp-year" aria-hidden="true">{{ job.year }}</span>
+            <span class="xp-marker" aria-hidden="true"></span>
+        </div>
+        <div class="xp-body">
+            <header class="xp-head">
+                <h3 class="xp-company">{{ job.company }}</h3>
+                <p class="xp-loc mono">{{ job.location }}</p>
+            </header>
+            <ul class="xp-roles">
+                {% for role in job.roles %}
+                <li><span class="xp-period mono">{{ role.period }}</span><span class="xp-role">{{ role.title }}</span></li>
+                {% endfor %}
+            </ul>
+            {% if job.summary %}<p class="xp-summary">{{ job.summary }}</p>{% endif %}
+            {% if job.link %}<p class="xp-link"><a href="{{ job.link.url }}">{{ job.link.text }}</a></p>{% endif %}
+            {% if job.highlights %}
+            <details class="xp-details">
+                <summary class="mono"><span class="xp-details-open">{{ job.highlights | size }} highlights</span><span class="xp-details-close">Fold</span></summary>
+                <ul class="xp-highlights">
+                    {% for h in job.highlights %}<li>{{ h }}</li>{% endfor %}
+                </ul>
+            </details>
+            {% endif %}
+        </div>
+    </li>
+    {% endfor %}
+</ol>

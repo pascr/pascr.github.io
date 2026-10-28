@@ -1,16 +1,14 @@
 ---
 ---
 [
-{% for post in site.posts %}
-  {% unless post.draft %}
+{% for post in site.posts %}{% unless post.draft %}
     {
-        "title": "{{ post.title }}",
-        "category": "{{ post.category }}",
-        "url": "{{ post.url | prepend: site.github.url | prepend: site.baseurl }}",
+        "title": {{ post.title | jsonify }},
+        "category": {{ post.category | jsonify }},
+        "url": {{ post.url | relative_url | jsonify }},
         "tags": {{ post.tags | jsonify }},
-        "date": "{{ post.date }}",
+        "date": {{ post.date | date_to_xmlschema | jsonify }},
         "language": "{% if post.language %}{{ post.language | downcase }}{% else %}{{ site.language | downcase }}{% endif %}"
     }{% unless forloop.last %},{% endunless %}
-  {% endunless %}
-{% endfor %}
+{% endunless %}{% endfor %}
 ]

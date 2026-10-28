@@ -1,39 +1,25 @@
 ---
 layout: default
-title: 404 - Page not found
+title: Page not found
+permalink: /404.html
 visible: false
 ---
-
-<div id="content" class="content">
-    <header class="post-header short-diver">
-        <h1 class="post-title">Page not found</h1>
-        <p>The page you requested could not be found.</p>
-    </header>
-
-    <h3>Similar URLs</h3>
-    <ul class="category recent-posts">
-        <ul class="urlSuggestions"></ul>
-    </ul>
-</div>
-
-<script id="article-template" type="text/x-custom-template">
-    <li>
-        <div class="article">
-            <article class="article" itemscope itemtype="http://schema.org/BlogPosting">
-                <header class="post-header">
-                    <span class="title"><a itemprop="name" href="" title=""></a></span>
-                    <time class="date" itemprop="datePublished" datetime=""></time>
-                </header>
-            </article>
+<section class="notfound wrap">
+    <div class="notfound-grid">
+        <p class="notfound-code" aria-hidden="true">
+            <span>4</span><span class="notfound-slice">0</span><span>4</span>
+        </p>
+        <div class="notfound-body">
+            <p class="post-kicker mono">Error / 404</p>
+            <h1 class="notfound-title">This slice is missing.</h1>
+            <p class="prose prose--lead">The page you asked for does not exist, or it moved. The closest matches are listed below.</p>
+            <p><a class="button" href="{{ '/' | relative_url }}">Back to the start <span class="button-arrow" aria-hidden="true">→</span></a></p>
         </div>
-    </li>
-</script>
-
-<script src="{{ site.github.url | prepend: site.baseurl }}/js/jquery-1.12.0.min.js"></script>
-<script src="{{ site.github.url | prepend: site.baseurl }}/js/fuzzyset.js"></script>
-<script src="{{ site.github.url | prepend: site.baseurl }}/js/offline.js"></script>
-<script>
-    $(document).ready(function () {
-        insertSimilarUrls(String(window.location.href), "{{ site.github.url | prepend: site.baseurl }}/api/posts.json", "#article-template", ".urlSuggestions", 10);
-    });
-</script>
+    </div>
+    <div class="notfound-suggestions" data-suggestions data-source="{{ '/api/posts.json' | relative_url }}" hidden>
+        <p class="footer-label mono">Did you mean</p>
+        <ol class="post-list" data-suggestion-list></ol>
+    </div>
+</section>
+<script src="{{ '/js/fuzzyset.js' | relative_url }}" defer></script>
+<script src="{{ '/js/notfound.js' | relative_url }}" defer></script>

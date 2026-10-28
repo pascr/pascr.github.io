@@ -1,16 +1,18 @@
 ---
 layout: default
 ---
-<main class="content" role="main">
-    <article class="post single-post" itemscope itemtype="http://schema.org/BlogPosting">
-        <header class="post-header short-diver">
-            <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>           
-        </header>
-        <section class="post-content short-diver" itemprop="articleBody">
-            {{content}}
-        </section>
-    </article>
-</main>
-
-{% include photoswipe.html %}
-{% include post_scripts.html %}
+<article class="page wrap{% if page.numbered %} page--numbered{% endif %}">
+    <header class="page-header" data-reveal>
+        {% if page.kicker %}<p class="post-kicker mono">{{ page.kicker }}</p>{% endif %}
+        <h1 class="page-title">{{ page.title }}</h1>
+    </header>
+    <div class="page-grid">
+        <nav class="toc-side" aria-label="On this page" data-toc hidden>
+            <p class="toc-side-label mono">Contents</p>
+            <ol class="toc-side-list"></ol>
+        </nav>
+        <div class="page-body prose{% if page.numbered %} prose--numbered{% endif %}" data-toc-source>
+            {{ content }}
+        </div>
+    </div>
+</article>

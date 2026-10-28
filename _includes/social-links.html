@@ -1,0 +1,7 @@
+{% assign a = include.author %}
+<ul class="social{% if include.compact %} social--compact{% endif %}">
+    {% if a.github %}<li><a href="https://github.com/{{ a.github }}" rel="me" itemprop="sameAs">GitHub</a></li>{% endif %}
+    {% if a.linkedin %}<li><a href="https://www.linkedin.com/in/{{ a.linkedin }}" rel="me" itemprop="sameAs">LinkedIn</a></li>{% endif %}
+    {% if a.twitter %}<li><a href="https://twitter.com/{{ a.twitter }}" rel="me" itemprop="sameAs">X</a></li>{% endif %}
+    {% if a.email %}<li><a href="mailto:{{ a.email }}" itemprop="email">Email</a></li>{% endif %}
+</ul>
