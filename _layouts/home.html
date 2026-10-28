@@ -12,8 +12,8 @@ layout: default
         <p class="hero-kicker mono"><span class="hero-dot" aria-hidden="true"></span>{{ author.role }}</p>
 
         <figure class="hero-figure" data-hero>
-            <div class="hero-cover" data-parallax="0.6">
-                <img class="hero-photo" src="{{ author.cover | relative_url }}" alt="Lake Geneva at dusk, with the Alps on the horizon, seen from Lausanne" width="1600" height="900" fetchpriority="high">
+            <div class="hero-cover" role="img" aria-label="Line drawing of the Alps skyline seen across Lake Geneva from Lausanne">
+                {% include ridge.svg %}
             </div>
             <svg class="hero-cut" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
                 <line x1="0" y1="100" x2="27" y2="-42.1" vector-effect="non-scaling-stroke"/>

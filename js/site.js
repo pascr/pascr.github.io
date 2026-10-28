@@ -114,18 +114,38 @@
   var hero = document.querySelector('[data-hero]');
   if (hero) {
     var title = document.querySelector('.hero-title');
-    var photo = hero.querySelector('.hero-photo');
     var layers = Array.prototype.slice.call(hero.querySelectorAll('[data-parallax]'));
     var go = function () {
       hero.classList.add('is-live');
       if (title) { title.classList.add('is-live'); }
     };
-    if (photo && photo.decode) {
-      photo.decode().then(go, go);
-    } else if (photo && !photo.complete) {
-      photo.addEventListener('load', go); photo.addEventListener('error', go);
-    } else { go(); }
-    window.setTimeout(go, 1500); /* never wait on a slow network */
+    /* next frame, so the pre-live styles are applied first and the transitions run */
+    window.requestAnimationFrame(function () { window.requestAnimationFrame(go); });
+
+    /* The little athletes are SMIL animations: freeze them for reduced motion,
+       and pause them while the hero is off screen or the tab is hidden. */
+    var ridge = hero.querySelector('.ridge');
+    if (ridge && ridge.pauseAnimations) {
+      if (reduceMotion) {
+        ridge.pauseAnimations();
+        ridge.setCurrentTime(40);
+      } else {
+        var paused = false;
+        var setPaused = function (p) {
+          if (p === paused) { return; }
+          paused = p;
+          if (p) { ridge.pauseAnimations(); } else { ridge.unpauseAnimations(); }
+        };
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (entries) {
+            setPaused(!entries[0].isIntersecting || document.hidden);
+          }).observe(ridge);
+        }
+        document.addEventListener('visibilitychange', function () {
+          setPaused(document.hidden);
+        });
+      }
+    }
 
     if (!reduceMotion && window.matchMedia('(pointer: fine)').matches && layers.length) {
       var section = hero.closest('.hero') || hero;
