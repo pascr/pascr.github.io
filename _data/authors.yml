@@ -5,7 +5,7 @@ default:
   role:         "CTO & Partner, Visium SA"
   cover:        /assets/alps-cover.jpg
   picture:      /assets/pascr.jpg
-  bio:          Building software with AI, one slice at a time
+  bio:          Building trusted AI, one slice at a time
   location:     Lausanne, Switzerland
   coordinates:  "46.52° N, 6.63° E"
   website:      "https://sliceofcode.net/"
@@ -19,7 +19,7 @@ pascr:
   role:         "CTO & Partner, Visium SA"
   cover:        /assets/alps-cover.jpg
   picture:      /assets/pascr.jpg
-  bio:          Building software with AI, one slice at a time
+  bio:          Building trusted AI, one slice at a time
   location:     Lausanne, Switzerland
   coordinates:  "46.52° N, 6.63° E"
   website:      "https://sliceofcode.net/"
