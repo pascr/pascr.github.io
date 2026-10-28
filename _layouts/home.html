@@ -4,16 +4,8 @@ layout: default
 {% assign author = site.data.authors[page.author] | default: site.data.authors['default'] %}
 {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
 {% assign first_year = site.data.experience | map: "year" | sort | first %}
-{% assign this_year = site.time | date: "%Y" %}
-{% assign years = this_year | minus: first_year %}
+{% assign years = site.time | date: "%Y" | minus: first_year %}
 {% assign readme = site.pages | where: "menutitle", "Readme" | first %}
-{% assign span = this_year | plus: 1 | minus: first_year %}
-
-<div class="route" data-route>
-<svg class="spine" data-spine aria-hidden="true" focusable="false">
-    <path class="spine-ghost" d=""/>
-    <path class="spine-line" d="" pathLength="1"/>
-</svg>
 
 <section class="hero" aria-labelledby="hero-title" data-hero>
     <canvas class="hero-field" data-field aria-hidden="true"></canvas>
@@ -22,14 +14,17 @@ layout: default
         <p class="hero-kicker mono"><span class="hero-dot" aria-hidden="true"></span>{{ author.role }}</p>
     </div>
     <div class="wrap hero-grid">
+
         <h1 id="hero-title" class="hero-title">
             <span class="hero-title-line">Pascal</span>
             <span class="hero-title-line">Rodriguez</span>
         </h1>
+
         <p class="hero-lede">
             Building trusted AI, <em>one slice at a time</em>. Agentic AI systems that regulated industries
             can trust, and the engineering teams that make them work, from the shore of Lake Geneva.
         </p>
+
         <dl class="hero-meta mono">
             <div><dt>Based in</dt><dd>{{ author.location }}</dd></div>
             <div><dt>Coordinates</dt><dd>{{ author.coordinates }}</dd></div>
@@ -38,146 +33,64 @@ layout: default
             <div class="hero-meta-wide"><dt>Elsewhere</dt><dd>{% include social-links.html author=author compact=true %}</dd></div>
         </dl>
     </div>
-    <span class="anchor" data-anchor="hero-exit" aria-hidden="true"></span>
 </section>
 
-<section id="about" class="leg leg--about" aria-labelledby="about-title">
-    <div class="wrap leg-grid">
-        <div class="leg-body prose prose--lead" data-reveal>
-            <h2 id="about-title" class="visually-hidden">About</h2>
+<section id="about" class="section" aria-labelledby="about-title" data-reveal>
+    <div class="wrap section-grid">
+        <header class="section-head">
+            <span class="section-index mono">01</span>
+            <h2 id="about-title" class="section-title">About</h2>
+        </header>
+        <div class="section-body prose prose--lead">
             {{ content }}
             <p class="interests mono">
                 <span>agentic &amp; generative AI</span><span>AI in regulated industries</span><span>LLM orchestration</span><span>streaming architectures</span><span>distributed systems</span><span>engineering culture</span><span>mentoring</span>
             </p>
         </div>
-        <div class="leg-rail">
-            <div class="station station--right" data-anchor="about">
-                <span class="station-dot" aria-hidden="true"></span>
-                <span class="station-label mono"><b>01</b> About</span>
-            </div>
+    </div>
+</section>
+
+<section id="experience" class="section section--xp" aria-labelledby="xp-title">
+    <div class="wrap section-grid">
+        <header class="section-head" data-reveal>
+            <span class="section-index mono">02</span>
+            <h2 id="xp-title" class="section-title">Experience</h2>
+            <p class="section-note mono">{{ site.data.experience | size }} chapters, {{ first_year }} to today</p>
+        </header>
+        <div class="section-body">
+            {% include experience.html %}
         </div>
     </div>
 </section>
 
-<section id="experience" class="leg leg--xp" aria-labelledby="xp-title">
-    <div class="wrap">
-        <div class="station station--left" data-anchor="xp-start">
-            <span class="station-dot" aria-hidden="true"></span>
-            <span class="station-label mono"><b>02</b> Experience <span class="muted">/ {{ first_year }} to today, drawn as altitude</span></span>
-        </div>
-        <h2 id="xp-title" class="visually-hidden">Experience</h2>
-
-        <div class="profile" data-profile style="--span: {{ span }}">
-            {% assign chapters = site.data.experience | sort: "year" %}
-            {% for job in chapters %}
-            {% assign x = job.year | minus: first_year | times: 1000 | divided_by: span %}
-            <a class="peak{% if job.current %} is-current{% endif %}" href="#xp-{{ job.slug }}" data-anchor="peak-{{ job.slug }}" data-peak="{{ job.slug }}" style="--x: {{ x | divided_by: 10.0 }}%; --alt: {{ job.altitude }}">
-                <span class="peak-dot" aria-hidden="true"></span>
-                <span class="peak-label">
-                    <span class="peak-year mono">{{ job.year }}</span>
-                    <span class="peak-name">{{ job.short }}</span>
-                    <span class="peak-role">{{ job.roles.first.title }}</span>
-                </span>
-            </a>
-            {% endfor %}
-            <span class="peak peak--summit" data-anchor="summit" style="--x: 98.5%; --alt: 7" aria-hidden="true">
-                <span class="peak-dot"></span>
-                <span class="peak-label"><span class="peak-year mono">{{ this_year }}</span><span class="peak-name">Today</span></span>
-            </span>
-            <span class="profile-base mono" aria-hidden="true"><span>{{ first_year }}</span><span>{{ this_year }}</span></span>
-        </div>
-
-        <div class="chapters">
-            {% for job in site.data.experience %}
-            <article class="chapter{% if job.current %} is-current{% endif %}" id="xp-{{ job.slug }}" data-chapter="{{ job.slug }}" data-reveal>
-                <header class="chapter-head">
-                    <span class="chapter-year" aria-hidden="true">{{ job.year }}</span>
-                    <div>
-                        <h3 class="chapter-company">{{ job.company }}</h3>
-                        <p class="chapter-loc mono">{{ job.location }}</p>
-                    </div>
-                </header>
-                <ul class="xp-roles">
-                    {% for role in job.roles %}
-                    <li><span class="xp-period mono">{{ role.period }}</span><span class="xp-role">{{ role.title }}</span></li>
-                    {% endfor %}
-                </ul>
-                {% if job.summary %}<p class="xp-summary">{{ job.summary }}</p>{% endif %}
-                {% if job.link %}<p class="xp-link"><a href="{{ job.link.url }}">{{ job.link.text }}</a></p>{% endif %}
-                {% if job.technologies %}
-                <p class="xp-tech"><span class="xp-tech-label mono">Stack</span><span class="xp-tech-list">{{ job.technologies }}</span></p>
-                {% endif %}
-                {% if job.highlights %}
-                <details class="xp-details">
-                    <summary class="mono"><span class="xp-details-open">{{ job.highlights | size }} highlights</span><span class="xp-details-close">Fold</span></summary>
-                    <ul class="xp-highlights">
-                        {% for h in job.highlights %}<li>{{ h }}</li>{% endfor %}
-                    </ul>
-                </details>
-                {% endif %}
-            </article>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section id="writing" class="leg leg--writing" aria-labelledby="writing-title">
-    <div class="wrap">
-        <div class="station station--left" data-anchor="writing-start">
-            <span class="station-dot" aria-hidden="true"></span>
-            <span class="station-label mono"><b>03</b> Writing <span class="muted">/ {{ posts | size }} posts, one pulse each, <a href="{{ '/feed.xml' | relative_url }}">RSS</a></span></span>
-        </div>
-        <h2 id="writing-title" class="visually-hidden">Writing</h2>
-        {% assign oldest = posts | last %}
-        {% assign w_first = oldest.date | date: "%Y" %}
-        {% assign w_span = this_year | plus: 1 | minus: w_first %}
-        <div class="pulses" data-pulses>
-            {% for post in posts reversed %}
-            {% assign months = post.date | date: "%Y" | minus: w_first | times: 12 %}
-            {% assign m = post.date | date: "%-m" | plus: months %}
-            {% assign total = w_span | times: 12 %}
-            {% assign px = m | times: 1000 | divided_by: total %}
-            <a class="pulse {% cycle 'pulse--up', 'pulse--down' %}" href="{{ post.url | relative_url }}" data-anchor="pulse-{{ forloop.index }}" style="--x: {{ px | divided_by: 10.0 }}%">
-                <span class="pulse-tick" aria-hidden="true"></span>
-                <span class="pulse-card">
-                    <time class="mono" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y · %m" }}</time>
-                    <span class="pulse-title">{{ post.title }}</span>
-                </span>
-            </a>
-            {% endfor %}
-            <span class="anchor" data-anchor="writing-end" aria-hidden="true"></span>
-            <span class="profile-base mono" aria-hidden="true"><span>{{ w_first }}</span><span>{{ this_year }}</span></span>
+<section id="writing" class="section" aria-labelledby="writing-title" data-reveal>
+    <div class="wrap section-grid">
+        <header class="section-head">
+            <span class="section-index mono">03</span>
+            <h2 id="writing-title" class="section-title">Writing</h2>
+            <p class="section-note mono">{{ posts | size }} posts, <a href="{{ '/feed.xml' | relative_url }}">RSS</a></p>
+        </header>
+        <div class="section-body">
+            {% include post-list.html posts=posts %}
         </div>
     </div>
 </section>
 
 {% if readme %}
-<section id="readme" class="leg leg--readme" aria-labelledby="readme-title">
-    <div class="wrap leg-grid">
-        <div class="leg-body" data-reveal>
-            <h2 id="readme-title" class="visually-hidden">Readme</h2>
+<section id="readme" class="section section--readme" aria-labelledby="readme-title" data-reveal>
+    <div class="wrap section-grid">
+        <header class="section-head">
+            <span class="section-index mono">04</span>
+            <h2 id="readme-title" class="section-title">Readme</h2>
+        </header>
+        <div class="section-body">
             <blockquote class="pull">
                 <p>We trust each other. You're very good at your job. I'm not very good at your job. We win together, we fail together.</p>
             </blockquote>
             <p class="readme-blurb">A user manual for working with me: my guiding principles, how I work as a human, and what I value in others.</p>
             <a class="button" href="{{ readme.url | relative_url }}">Read the manual <span class="button-arrow" aria-hidden="true">→</span></a>
         </div>
-        <div class="leg-rail">
-            <div class="station station--right" data-anchor="readme">
-                <span class="station-dot" aria-hidden="true"></span>
-                <span class="station-label mono"><b>04</b> Readme</span>
-            </div>
-        </div>
     </div>
 </section>
 {% endif %}
-
-<div class="finish wrap" aria-hidden="true">
-    <span class="finish-mark" data-anchor="finish"><span class="finish-dot"></span></span>
-    <span class="finish-label mono">End of line. Thanks for scrolling.</span>
-</div>
-</div>
-
-<script src="{{ '/js/hero-strokes.js' | relative_url }}"></script>
 <script src="{{ '/js/field.js' | relative_url }}" defer></script>
-<script src="{{ '/js/spine.js' | relative_url }}" defer></script>
