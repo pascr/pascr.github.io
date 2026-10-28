@@ -110,6 +110,49 @@
     }
   }
 
+  /* Hero: entrance once the photo has decoded, then a soft pointer parallax. */
+  var hero = document.querySelector('[data-hero]');
+  if (hero) {
+    var title = document.querySelector('.hero-title');
+    var photo = hero.querySelector('.hero-photo');
+    var layers = Array.prototype.slice.call(hero.querySelectorAll('[data-parallax]'));
+    var go = function () {
+      hero.classList.add('is-live');
+      if (title) { title.classList.add('is-live'); }
+    };
+    if (photo && photo.decode) {
+      photo.decode().then(go, go);
+    } else if (photo && !photo.complete) {
+      photo.addEventListener('load', go); photo.addEventListener('error', go);
+    } else { go(); }
+    window.setTimeout(go, 1500); /* never wait on a slow network */
+
+    if (!reduceMotion && window.matchMedia('(pointer: fine)').matches && layers.length) {
+      var section = hero.closest('.hero') || hero;
+      var target = { x: 0, y: 0 }, current = { x: 0, y: 0 }, animating = false;
+      var step = function () {
+        current.x += (target.x - current.x) * 0.08;
+        current.y += (target.y - current.y) * 0.08;
+        layers.forEach(function (el) {
+          var depth = parseFloat(el.getAttribute('data-parallax')) || 1;
+          el.style.setProperty('--px', (current.x * depth).toFixed(2));
+          el.style.setProperty('--py', (current.y * depth).toFixed(2));
+        });
+        if (Math.abs(target.x - current.x) > 0.05 || Math.abs(target.y - current.y) > 0.05) {
+          window.requestAnimationFrame(step);
+        } else { animating = false; }
+      };
+      var kick = function () { if (!animating) { animating = true; window.requestAnimationFrame(step); } };
+      section.addEventListener('pointermove', function (e) {
+        var r = section.getBoundingClientRect();
+        target.x = ((e.clientX - r.left) / r.width - 0.5) * 18;
+        target.y = ((e.clientY - r.top) / r.height - 0.5) * 12;
+        kick();
+      });
+      section.addEventListener('pointerleave', function () { target.x = 0; target.y = 0; kick(); });
+    }
+  }
+
   /* Back to top. */
   var toTop = document.querySelector('[data-to-top]');
   if (toTop) {
