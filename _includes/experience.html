@@ -17,6 +17,9 @@
             </ul>
             {% if job.summary %}<p class="xp-summary">{{ job.summary }}</p>{% endif %}
             {% if job.link %}<p class="xp-link"><a href="{{ job.link.url }}">{{ job.link.text }}</a></p>{% endif %}
+            {% if job.technologies %}
+            <p class="xp-tech"><span class="xp-tech-label mono">Stack</span><span class="xp-tech-list">{{ job.technologies }}</span></p>
+            {% endif %}
             {% if job.highlights %}
             <details class="xp-details">
                 <summary class="mono"><span class="xp-details-open">{{ job.highlights | size }} highlights</span><span class="xp-details-close">Fold</span></summary>

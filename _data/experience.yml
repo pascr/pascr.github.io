@@ -6,8 +6,19 @@
   current:  true
   roles:
     - period: "06.2022 → today"
-      title:  Engineering Director
-  summary: "Just started :-)"
+      title:  Engineering Director & Partner
+  summary: >-
+    Leading Visium's transformation into a product-driven AI organization, directing engineering teams
+    building production-grade LLM-native systems, agentic workflows and NLU-powered conversational agents.
+    Responsible for technical vision, reliability standards, and delivering scalable GenAI solutions to
+    enterprise clients.
+  highlights:
+    - Driving the shift toward a product-oriented model, identifying and standardizing reusable assets, and implementing a scalable technology and product roadmap.
+    - Championing the adoption of Generative AI and next-generation AI capabilities, ensuring Visium stays ahead in the evolving AI landscape.
+    - Establishing best-in-class engineering practices through MLOps frameworks, CI/CD automation, cloud-native architectures, and modern software development standards.
+    - Scaling engineering operations by structuring teams, optimizing delivery processes, and mentoring future leaders to sustain a high-performance culture.
+    - Architected bidirectional streaming pipelines and real-time agentic orchestration systems, ensuring low-latency, high-reliability performance in production environments.
+  technologies: Agentic and Generative AI, NLU, LLMs, RAG, Agno, Python, FastAPI, TypeScript, React, MLOps, Kubernetes, Terraform, Pulumi, AWS, GCP, Azure
 
 - company:  ZF Group
   location: Bern, Switzerland
@@ -23,6 +34,7 @@
   link:
     text: "Bestmile's technology was acquired by ZF Group"
     url:  https://press.zf.com/press/en/releases/release_32320.html
+  technologies: Scala, Akka, Kafka, Kubernetes, Docker, Postgres, MongoDB, AWS, gRPC, DDD, Event-storming, Serverless, Python, NodeJS, Go, Terraform, Helm, Bash, Spark, Sagemaker
 
 - company:  Bestmile
   location: Lausanne, Switzerland
@@ -48,6 +60,7 @@
     - Followed the development of team members through one-to-ones and OKRs.
     - Encouraged a continuous learning and knowledge-sharing culture among the teams.
     - Actively participated in 3 funding rounds and due diligence processes.
+  technologies: Scala, Akka, Kafka, Kubernetes, Docker, Postgres, MongoDB, AWS, Azure, GCP, gRPC, DDD, Event-storming, Serverless, Python, NodeJS, Go, Terraform, Helm, Bash, Spark, Sagemaker, Vehicle SDKs, OEM APIs
 
 - company:  Easel TV
   location: London, United Kingdom
@@ -74,6 +87,7 @@
     - Directed the implementation of testing strategies for the product code base, including unit, integration and acceptance testing.
     - Introduced code reviews into the development workflow to enhance code quality and improve knowledge sharing.
     - Implemented and organized Agile processes as well as leading the different ceremonies such as sprint planning, retrospective and daily stand-up.
+  technologies: Scala, Play, Akka, Akka-Persistence, Slick, Sbt, ScalaTest, Spec2, Guice, JavaScript, AngularJS, NodeJS, Neo4j, ElasticSearch, MongoDB, Postgres, AWS, Azure
 
 - company:  SICPA Security Solutions SA
   location: Lausanne, Switzerland
@@ -86,6 +100,7 @@
     - Developed a scalable RESTful API to securely authenticate and serve smartphone applications requests (Android and iOS) using Redis, JAX-RS, JBoss, JMS, JPA, MySQL, Oracle.
     - Involved in all development phases of a real-time product aggregation system from solution requirements definition, software specifications, design, implementation, testing and on-site deployment. Led two developers based in Brazil for the backend implementation.
     - Initiated and responsible for the adoption and migration to Git. Defined the workflows to be used during the development.
+  technologies: JEE6, Maven, Subversion, Spring, Hibernate, Guice, JBehave, Swing, Ruby, Rails, Grails, MongoDB, MySQL, MSSQL, JBoss, Tomcat, Jetty, Redis, JavaScript, Git, TDD, BDD, Puppet
 
 - company:  Bobst SA
   location: Lausanne, Switzerland
@@ -102,3 +117,4 @@
     - Completed a project for the migration of critical databases from Oracle 8i and 9i to Oracle 10g.
     - IT administration of Unix, Windows and VMware ESX servers (more than 200).
     - Implementation of a multi-platform and Open Source monitoring solution.
+  technologies: Linux, Unix, Virtualization, Oracle DB, Project management, Bash, VBScript
