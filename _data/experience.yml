@@ -6,7 +6,7 @@
   current:  true
   roles:
     - period: "06.2022 → today"
-      title:  Engineering Director & Partner
+      title:  CTO & Partner
   summary: >-
     Leading Visium's transformation into a product-driven AI organization, directing engineering teams
     building production-grade LLM-native systems, agentic workflows and NLU-powered conversational agents.

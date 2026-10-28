@@ -2,7 +2,7 @@
 default:
   initial:      pascr
   name:         "Pascal Rodriguez"
-  role:         "Engineering Director & Partner, Visium SA"
+  role:         "CTO & Partner, Visium SA"
   cover:        /assets/alps-cover.jpg
   picture:      /assets/pascr.jpg
   bio:          Building software one slice at a time
@@ -16,7 +16,7 @@ default:
 pascr:
   initial:      pascr
   name:         "Pascal Rodriguez"
-  role:         "Engineering Director & Partner, Visium SA"
+  role:         "CTO & Partner, Visium SA"
   cover:        /assets/alps-cover.jpg
   picture:      /assets/pascr.jpg
   bio:          Building software one slice at a time
