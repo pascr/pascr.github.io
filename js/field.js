@@ -1,6 +1,9 @@
-/* Hero signal: a band of thin streams flowing across the width. Every so often
-   the streams gather into the strokes of a drawing (window.HERO_STROKES, traced
-   by scripts/trace_strokes.py), hold, and release back into the wave.
+/* Hero signal: a band of thin streams flowing across the width. Inside the band,
+   one after the other like the legs of a triathlon, the swimmer, the cyclist and
+   the runner surface: each stroke of the drawing (window.HERO_STROKES, traced by
+   scripts/trace_strokes.py, split into three figures by position) is carried by
+   one stream, which keeps flowing on both sides and bends into the stroke where
+   the figure is, then lets go.
    Follows the theme, drifts with the pointer, renders one frame when reduced
    motion is requested, pauses off screen or in a hidden tab. */
 (function () {
@@ -15,7 +18,7 @@
   var ink = { r: 21, g: 19, b: 15 }, red = '#d9230f', redRGB = { r: 217, g: 35, b: 15 };
   var pointer = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
   var running = false, visible = true, raf = 0, t0 = performance.now(), born = t0;
-  var M = 200;                                   /* samples per line */
+  var M = 240;                                   /* samples per line */
 
   function hexToRgb(h) {
     h = h.trim();
@@ -83,28 +86,68 @@
     return out;
   }
 
-  /* the drawing, fitted into the hero: one target per line, sorted by height so lines barely cross */
-  var targets = [], lines = 16, redLine = 6, scale = 1;
+  /* The drawing split into figures by horizontal position (1-D k-means on the
+     strokes' centres), each fitted into the same box inside the band. A stroke is
+     looked up by the x of a sample: inside the stroke's span it maps along the
+     stroke's arc length, so the stream bends into it and out again. */
+  var figures = [], lines = 16, redLine = 6, FIGS = 3, M2 = 160;
   function buildTargets() {
-    targets = [];
+    figures = [];
     if (!ART || !ART.strokes.length) { lines = 16; redLine = 6; return; }
+    var strokes = ART.strokes.filter(function (st) { return st.length >= 2; });
+    var cx = strokes.map(function (st) { var m = 0; st.forEach(function (p) { m += p[0]; }); return m / st.length; });
+    var centres = [ART.width / 6, ART.width / 2, ART.width * 5 / 6], label = [], it, i, k;
+    for (it = 0; it < 24; it++) {
+      label = cx.map(function (x) { var best = 0; for (k = 1; k < FIGS; k++) { if (Math.abs(x - centres[k]) < Math.abs(x - centres[best])) { best = k; } } return best; });
+      for (k = 0; k < FIGS; k++) {
+        var sum = 0, n = 0;
+        for (i = 0; i < cx.length; i++) { if (label[i] === k) { sum += cx[i]; n++; } }
+        if (n) { centres[k] = sum / n; }
+      }
+    }
     var phone = W < 640;
-    /* the drawing sits in the free space top right of the name on wide screens, above it on phones */
-    var maxW = phone ? W * 0.94 : W * 0.50, maxH = phone ? H * 0.22 : H * 0.30;
-    var bw = maxW, bh = bw * ART.height / ART.width;
-    if (bh > maxH) { bh = maxH; bw = bh * ART.width / ART.height; }
-    scale = bw / ART.width;
-    var bx = phone ? (W - bw) / 2 : W * 0.97 - bw, by = phone ? H * 0.16 : H * 0.03 + (maxH - bh) / 2;
-    var fitted = ART.strokes.filter(function (s) { return s.length >= 2; }).map(function (s, idx) {
-      var pts = smooth(s.map(function (p) { return [bx + p[0] * scale, by + p[1] * scale, p[2] * scale]; }), 6);
-      var meanY = 0; pts.forEach(function (p) { meanY += p[1]; }); meanY /= pts.length;
-      return { pts: resample(pts, M), y: meanY, idx: idx };
-    });
-    fitted.sort(function (a, b) { return a.y - b.y; });
-    targets = fitted;
-    lines = Math.max(16, fitted.length);
-    redLine = 0;
-    fitted.forEach(function (f, k) { if (f.idx === 0) { redLine = k; } });   /* the longest stroke goes red */
+    var band = H * (phone ? 0.36 : 0.44);
+    var maxW = phone ? W * 0.7 : W * 0.30, maxH = phone ? H * 0.2 : H * 0.34;
+    var fx = phone ? W * 0.5 : W * 0.80, fy = band + (phone ? 40 : 70);
+    for (k = 0; k < FIGS; k++) {
+      var group = [];
+      for (i = 0; i < strokes.length; i++) { if (label[i] === k) { group.push(strokes[i]); } }
+      if (!group.length) { continue; }
+      var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      group.forEach(function (st) { st.forEach(function (p) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }); });
+      var gw = x1 - x0, gh = y1 - y0;
+      var sc = Math.min(maxW / gw, maxH / gh);
+      var ox = fx - gw * sc / 2, oy = fy - gh * sc / 2;
+      var fitted = group.map(function (st) {
+        var pts = smooth(st.map(function (p) { return [ox + (p[0] - x0) * sc, oy + (p[1] - y0) * sc, Math.max(1.2, p[2] * sc * 1.15)]; }), 6);
+        var arr = resample(pts, M2), minx = Infinity, maxx = -Infinity, meany = 0, len = 0;
+        for (i = 0; i < M2; i++) {
+          minx = Math.min(minx, arr[i * 3]); maxx = Math.max(maxx, arr[i * 3]); meany += arr[i * 3 + 1];
+          if (i) { len += Math.hypot(arr[i * 3] - arr[i * 3 - 3], arr[i * 3 + 1] - arr[i * 3 - 2]); }
+        }
+        return { pts: arr, x0: minx, x1: maxx, y: meany / M2, len: len };
+      });
+      fitted.sort(function (p, q) { return p.y - q.y; });
+      lines = Math.max(16, fitted.length);
+      /* spread the strokes over the band's lines by height, longest stroke on the red line */
+      var byLine = {};
+      fitted.forEach(function (f, j) { byLine[fitted.length === 1 ? redLine : Math.round(j * (lines - 1) / (fitted.length - 1))] = f; });
+      var longest = fitted.reduce(function (p, q) { return q.len > p.len ? q : p; }, fitted[0]);
+      var lk = Object.keys(byLine).filter(function (key) { return byLine[key] === longest; })[0];
+      if (lk !== undefined && +lk !== redLine) { var tmp = byLine[redLine]; byLine[redLine] = longest; if (tmp) { byLine[lk] = tmp; } else { delete byLine[lk]; } }
+      figures.push(byLine);
+    }
+  }
+  /* stroke target for a sample at screen x: inside the span it follows the arc, outside it holds the end */
+  function strokeAt(f, x, out) {
+    var u = (x - f.x0) / Math.max(1, f.x1 - f.x0);
+    var dist = u < 0 ? (f.x0 - x) : u > 1 ? (x - f.x1) : 0;
+    u = Math.min(1, Math.max(0, u));
+    var fi = u * (M2 - 1), i0 = Math.floor(fi), i1 = Math.min(M2 - 1, i0 + 1), ft = fi - i0;
+    out[0] = f.pts[i0 * 3] + (f.pts[i1 * 3] - f.pts[i0 * 3]) * ft;
+    out[1] = f.pts[i0 * 3 + 1] + (f.pts[i1 * 3 + 1] - f.pts[i0 * 3 + 1]) * ft;
+    out[2] = f.pts[i0 * 3 + 2] + (f.pts[i1 * 3 + 2] - f.pts[i0 * 3 + 2]) * ft;
+    return dist;
   }
 
   function resize() {
@@ -119,15 +162,18 @@
     draw(performance.now());
   }
 
-  /* timeline: plain wave, then the drawing forms, holds and dissolves */
-  var WAVE = 5, IN = 2.6, HOLD = 8, OUT = 2.4, CYCLE = WAVE + IN + HOLD + OUT;
+  /* timeline: wave, then each figure surfaces, holds and sinks, with a breath of wave between */
+  var WAVE = 3, IN = 1.8, HOLD = 4.2, OUT = 1.6, GAP = 1.6;
+  var LEG = IN + HOLD + OUT + GAP;
   function ease(v) { v = Math.min(1, Math.max(0, v)); return v * v * (3 - 2 * v); }
   function state(t) {
-    if (!targets.length) { return 0; }
-    var u = t % CYCLE;
-    if (u < WAVE) { return 0; }
+    if (!figures.length) { return { fig: null, s: 0 }; }
+    var cycle = WAVE + figures.length * LEG, u = t % cycle;
+    if (u < WAVE) { return { fig: null, s: 0 }; }
     u -= WAVE;
-    return u < IN ? ease(u / IN) : u < IN + HOLD ? 1 : 1 - ease((u - IN - HOLD) / OUT);
+    var k = Math.floor(u / LEG), v = u - k * LEG;
+    var s = v < IN ? ease(v / IN) : v < IN + HOLD ? 1 : v < IN + HOLD + OUT ? 1 - ease((v - IN - HOLD) / OUT) : 0;
+    return { fig: figures[k], s: s };
   }
 
   function waveY(x, k, t, centre, spacing, swing, ph) {
@@ -139,18 +185,19 @@
          + Math.sin(x * 0.0045 + k * 0.9 + t * 0.12) * amp * 0.35;
   }
 
-  var px = new Float32Array(M), py = new Float32Array(M), pw = new Float32Array(M);
+  var px = new Float32Array(M), py = new Float32Array(M), pw = new Float32Array(M), tg = [0, 0, 0];
   function draw(now) {
     var t = (now - t0) / 1000;
     var fade = reduceMotion ? 1 : Math.min(1, (now - born) / 1600);
     ctx.clearRect(0, 0, W, H);
 
-    var s = reduceMotion ? 1 : state(t);
-    var burst = Math.sin(s * Math.PI);
+    var st = reduceMotion ? { fig: figures[2] || figures[0] || null, s: 1 } : state(t);
+    var s = st.s, burst = Math.sin(s * Math.PI);
     var centre = H * ((W < 640 ? 0.36 : 0.44) + (pointer.y - 0.5) * 0.04);
     var spacing = (W < 640 ? 7 : 9) * 16 / lines;
-    var swing = Math.min(150, H * 0.17) * (1 - 0.4 * s);
+    var swing = Math.min(150, H * 0.17);
     var ph = (pointer.x - 0.5) * 0.8;
+    var margin = W < 640 ? 60 : 110;                  /* how far outside a stroke the stream still bends */
     var inkRGB = ink.r + ',' + ink.g + ',' + ink.b;
     var redStr = redRGB.r + ',' + redRGB.g + ',' + redRGB.b;
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
@@ -158,22 +205,28 @@
     for (var k = 0; k < lines; k++) {
       var isRed = k === redLine;
       var depth = k / (lines - 1);
-      var tgt = targets[k] ? targets[k].pts : null;
+      var f = st.fig ? st.fig[k] : null;
       var waveW = isRed ? 1.6 : 0.8 + 0.6 * depth;
       var waveA = isRed ? 0.95 : 0.14 + 0.3 * depth;
-      var i;
+      var i, shaped = false;
       for (i = 0; i < M; i++) {
         var wx = i / (M - 1) * W, wy = waveY(wx, k, t, centre, spacing, swing, ph);
-        if (tgt && s > 0) {
-          var n = Math.sin(i * 0.9 + k + t * 9) * Math.sin(i * 0.23 - t * 5);
-          px[i] = wx + (tgt[i * 3] - wx) * s + Math.sin(i * 0.5 + k * 2 + t * 7) * 8 * burst;
-          py[i] = wy + (tgt[i * 3 + 1] - wy) * s + n * (12 * burst + 0.6 * s);
-          pw[i] = waveW + (Math.max(0.9, tgt[i * 3 + 2]) - waveW) * s;
-        } else { px[i] = wx; py[i] = wy; pw[i] = waveW; }
+        if (f && s > 0) {
+          var dist = strokeAt(f, wx, tg);
+          var w = s * (dist >= margin ? 0 : 1 - dist / margin);
+          w = w * w * (3 - 2 * w);
+          if (w > 0) {
+            shaped = true;
+            var n = Math.sin(i * 0.9 + k + t * 9) * Math.sin(i * 0.23 - t * 5);
+            px[i] = wx + (tg[0] - wx) * w + Math.sin(i * 0.5 + k * 2 + t * 7) * 6 * burst * w;
+            py[i] = wy + (tg[1] - wy) * w + n * (10 * burst + 0.5 * s) * w;
+            pw[i] = waveW + (tg[2] - waveW) * w;
+            continue;
+          }
+        }
+        px[i] = wx; py[i] = wy; pw[i] = waveW;
       }
-      /* lines without a stroke fade away while the drawing is up */
-      var alpha = (tgt ? waveA + (0.92 - waveA) * s : waveA * (1 - s)) * fade;
-      if (alpha < 0.01) { continue; }
+      var alpha = (f ? waveA + (0.92 - waveA) * s : waveA) * fade;
       var color = isRed ? red : 'rgba(' + inkRGB + ',' + alpha.toFixed(3) + ')';
       if (isRed) {
         ctx.beginPath();
@@ -184,7 +237,7 @@
         ctx.globalAlpha = alpha;
       }
       ctx.strokeStyle = color;
-      if (!tgt || s === 0) {
+      if (!shaped) {
         ctx.beginPath();
         for (i = 0; i < M; i++) { if (i) { ctx.lineTo(px[i], py[i]); } else { ctx.moveTo(px[i], py[i]); } }
         ctx.lineWidth = waveW;
