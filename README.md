@@ -32,8 +32,8 @@ Then open http://localhost:4000.
 Request your data archive from LinkedIn (Settings, Data privacy, "Get a copy of your data"). The complete archive, the one that includes `Shares.csv` and `Articles/`, is the one to use:
 
 ```bash
-python3 scripts/linkedin_to_posts.py ~/Downloads/Complete_LinkedInDataExport.zip --dry-run   # preview
-python3 scripts/linkedin_to_posts.py ~/Downloads/Complete_LinkedInDataExport.zip             # write drafts
+python3 scripts/linkedin_to_posts.py ~/Downloads/LinkedInDataExport.zip --dry-run   # preview
+python3 scripts/linkedin_to_posts.py ~/Downloads/LinkedInDataExport.zip             # write drafts
 ```
 
-Each post lands in `_posts/` with `draft: true`, a guessed title and a `linkedin_url` back to the original. Review, give it a real title and tags, remove the draft flag, and it is live.
+Each post lands in `_drafts/`, which Jekyll does not build, with a guessed title and, when the export has it, a `linkedin_url` back to the original. Review, give it a real title and tags, move it to `_posts/`, and it is live. Preview drafts locally with `bundle exec jekyll serve --drafts`.

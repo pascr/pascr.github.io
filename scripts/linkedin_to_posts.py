@@ -2,12 +2,12 @@
 """Turn a LinkedIn data export into Jekyll posts.
 
 Usage:
-    python3 scripts/linkedin_to_posts.py path/to/Complete_LinkedInDataExport.zip [--out _posts] [--min-words 80] [--dry-run]
+    python3 scripts/linkedin_to_posts.py path/to/LinkedInDataExport.zip [--out _drafts] [--min-words 80] [--dry-run]
 
-Reads Shares.csv (your own posts) and Articles/ (long-form articles) from the
-archive and writes one Markdown file per item into the output folder as a
-*draft* (draft: true), so nothing is published until you review it, pick a
-title, and remove the draft flag.
+Reads Shares.csv (your own posts), Articles/ (long-form articles) and
+Rich_Media.csv (the text of posts that carried an image) from the archive and
+writes one Markdown file per item into _drafts/, which Jekyll does not build.
+Review a draft, give it a title and tags, and move it into _posts/ to publish.
 
 Reposts without commentary and very short posts are skipped; tweak --min-words.
 Each generated post carries `linkedin_url` so the layout can link back to
@@ -37,6 +37,15 @@ def guess_title(body, limit=80):
     sentence = re.split(r"(?<=[.!?])\s", first, maxsplit=1)[0]
     title = sentence if 12 <= len(sentence) <= limit else first[:limit]
     return title.rstrip(" .:,;").strip() or "Untitled"
+
+
+def clean_text(body):
+    """LinkedIn's export replaces curly quotes and emoji with '?'. Repair the obvious cases."""
+    body = re.sub(r"(\w)\?(t|s|re|ve|ll|d|m)\b", r"\1'\2", body)      # don?t -> don't
+    body = re.sub(r"^\s*\?+\s*", "- ", body, flags=re.M)                 # emoji bullets -> list items
+    body = re.sub(r"\?(?=[A-Za-z])", "", body)                            # stray ? glued to a word
+    body = body.replace("\r\n", "\n")
+    return body.strip()
 
 
 def yaml_str(value):
@@ -154,7 +163,7 @@ def parse_date(value):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("archive", help="LinkedIn export .zip (the complete one, with Shares.csv)")
-    ap.add_argument("--out", default="_posts", help="output folder (default: _posts)")
+    ap.add_argument("--out", default="_drafts", help="output folder (default: _drafts, which Jekyll does not build)")
     ap.add_argument("--min-words", type=int, default=80, help="skip posts shorter than this (default: 80)")
     ap.add_argument("--category", default="Leadership", help="category for imported items (default: Leadership)")
     ap.add_argument("--dry-run", action="store_true", help="list what would be written, write nothing")
@@ -170,7 +179,7 @@ def main():
         articles = [n for n in names if "/Articles/" in n and n.lower().endswith(".html")]
 
         if not shares:
-            print("No Shares.csv in this archive. This looks like the Basic export; wait for the complete one.", file=sys.stderr)
+            print("No Shares.csv in this archive: only posts that carried an image (Rich_Media.csv) can be imported.", file=sys.stderr)
         kept = skipped = 0
         for name in shares:
             text = z.read(name).decode("utf-8-sig", errors="replace")
@@ -181,12 +190,37 @@ def main():
                     skipped += 1
                     continue
                 date = parse_date(row.get("Date", ""))
-                body = html.unescape(body)
+                body = clean_text(html.unescape(body))
                 # LinkedIn hashtags at the end of a post become tags, not body text.
                 hashtags = re.findall(r"(?:^|\s)#(\w+)", body)
                 body = re.sub(r"(\s*#\w+)+\s*$", "", body).strip()
                 title = guess_title(body)
                 write_post(out_dir, date, title, body, row.get("ShareLink", ""), args.category, args.dry_run, "post")
+                if hashtags:
+                    print(f"           tags to consider: {' '.join(hashtags)}")
+                kept += 1
+
+        rich = [n for n in names if n.endswith("Rich_Media.csv")]
+        seen = set()
+        for name in rich:
+            text = z.read(name).decode("utf-8-sig", errors="replace")
+            for row in csv.DictReader(io.StringIO(text)):
+                when = row.get("Date/Time", "")
+                body = (row.get("Media Description") or "").strip()
+                if "feed" not in when.lower() or body in ("", "-") or len(body.split()) < args.min_words:
+                    skipped += 1
+                    continue
+                key = body[:80]
+                if key in seen:
+                    continue
+                seen.add(key)
+                m = re.search(r"on ([A-Z][a-z]+ \d{1,2}, \d{4}) at (\d{1,2}:\d{2} [AP]M)", when)
+                date = dt.datetime.strptime(m.group(1) + " " + m.group(2), "%B %d, %Y %I:%M %p") if m else dt.datetime.now()
+                body = clean_text(html.unescape(body))
+                hashtags = re.findall(r"(?:^|\s)#(\w+)", body)
+                body = re.sub(r"(\s*#\w+)+\s*$", "", body).strip()
+                title = guess_title(body)
+                write_post(out_dir, date, title, body, "", args.category, args.dry_run, "post")
                 if hashtags:
                     print(f"           tags to consider: {' '.join(hashtags)}")
                 kept += 1
@@ -205,7 +239,7 @@ def main():
             kept += 1
 
     print(f"\n{kept} items written as drafts, {skipped} short posts skipped (raise or lower --min-words to change).")
-    print("Review each file, set a title and tags, then remove `draft: true` to publish.")
+    print("Review each file, set a title and tags, then move it from _drafts/ to _posts/ to publish.")
 
 
 if __name__ == "__main__":
