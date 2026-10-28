@@ -17,14 +17,19 @@
   --code-muted:   #8e887c;
   --selection:    #d9230f;
 
-  // Hero illustration: facet shades f0 (lit) to f7 (shadow), lake, far ranges, shore.
-  $lit: #e2ddd2; $shadow: #2a2f3a;
-  @for $i from 0 through 7 { --m#{$i}: #{mix($shadow, $lit, $i * 100% / 7)}; }
-  --lake:         #c3ccd1;
-  --far1:         #b7b9bc;
-  --far2:         #cfcdc7;
-  --shore:        #e5e0d4;
+  // Hero illustration (flat scene)
+  --far2:         #d6d2c8;
+  --far2-shadow:  #c9c5bb;
+  --far1:         #b4b2ab;
+  --far1-shadow:  #a19f98;
+  --mtn:          #6d727c;
+  --mtn-shadow:   #4a4f59;
+  --snow:         #f3efe6;
+  --snow-shadow:  #d6d3cb;
+  --lake:         #c4ccd1;
+  --shore:        #e2ddd1;
   --sun:          #d9230f;
+  --track:        #d9230f;
 
   --font-sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -53,13 +58,18 @@
   --code-ink:     #ece7dc;
   --code-muted:   #7f7a70;
   --selection:    #ff5a4e;
-  $lit-d: #9ba1ab; $shadow-d: #121418;
-  @for $i from 0 through 7 { --m#{$i}: #{mix($shadow-d, $lit-d, $i * 100% / 7)}; }
-  --lake:         #181d22;
-  --far1:         #2a2d33;
-  --far2:         #1f2126;
+  --far2:         #1d2025;
+  --far2-shadow:  #181b1f;
+  --far1:         #2a2e35;
+  --far1-shadow:  #22262c;
+  --mtn:          #5a606b;
+  --mtn-shadow:   #3b4049;
+  --snow:         #d9dce1;
+  --snow-shadow:  #b3b8c0;
+  --lake:         #161b20;
   --shore:        #1b1917;
   --sun:          #ff5a4e;
+  --track:        #ff5a4e;
   color-scheme: dark;
 }
 

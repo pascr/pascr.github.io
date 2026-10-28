@@ -62,17 +62,28 @@
     will-change: transform;
   }
   .ridge-sun { fill: var(--sun); }
-  .far2 { fill: var(--far2); }
-  .far1 { fill: var(--far1); }
-  @for $i from 0 through 7 { .f#{$i} { fill: var(--m#{$i}); } }
+  .far2-lit { fill: var(--far2); }
+  .far2-shadow { fill: var(--far2-shadow); }
+  .far1-lit { fill: var(--far1); }
+  .far1-shadow { fill: var(--far1-shadow); }
+  .lit { fill: var(--mtn); }
+  .shadow { fill: var(--mtn-shadow); }
+  .snow { fill: var(--snow); }
+  .snow-shadow { fill: var(--snow-shadow); }
   .ridge-lake { fill: var(--lake); }
-  .ridge-reflection { opacity: 0.6; }
-  .ridge-shoreland { fill: var(--shore); }
-  .picto {
-    path, circle { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
-    .body path { stroke-width: 9; }
-    .gear path, .gear circle { stroke-width: 4.5; }
-    .head { fill: var(--ink); stroke: none; }
+  .ridge-reflection { opacity: 0.45; }
+  .ridge-shore path { fill: var(--shore); }
+  .ridge-track {
+    path {
+      fill: none;
+      stroke: var(--track);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 0.1 14;
+    }
+    line { stroke: var(--track); stroke-width: 4; stroke-linecap: round; }
+    polygon { fill: var(--track); }
   }
 }
 .hero-cut {
@@ -166,20 +177,21 @@
 .js .hero-figure:not(.is-live) {
   .hero-cover { clip-path: polygon(19% 0, 19% 0, 0 100%, 0 100%); }
   .hero-cut { clip-path: inset(150% 0 0 0); }
-  .ridge .ridge-sky { opacity: 0; transform: translate3d(0, 2rem, 0); }
-  .ridge .ridge-far { opacity: 0; transform: translate3d(0, 1.5rem, 0); }
-  .ridge .ridge-main { clip-path: inset(100% 0 0 0); }
-  .ridge .ridge-water, .ridge .ridge-shore, .ridge .picto-skier { opacity: 0; }
+  .ridge .ridge-sky { opacity: 0; transform: translate3d(0, 3rem, 0); }
+  .ridge .ridge-far2, .ridge .ridge-far1, .ridge .ridge-main { opacity: 0; transform: translate3d(0, 2.5rem, 0); }
+  .ridge .ridge-water, .ridge .ridge-shore { opacity: 0; }
+  .ridge .ridge-track { clip-path: inset(0 100% 0 0); }
   .hero-portrait { opacity: 0; transform: translate3d(0, 1rem, 0) scale(0.96); }
 }
 .js .hero-figure.is-live {
   .hero-cover { transition: clip-path 0.9s cubic-bezier(0.7, 0, 0.2, 1); }
   .hero-cut { clip-path: inset(-50% 0 0 0); transition: clip-path 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.05s; }
-  .ridge .ridge-sky { transition: opacity 1.2s var(--ease) 0.5s, transform 1.4s var(--ease) 0.5s; }
-  .ridge .ridge-far { transition: opacity 1s var(--ease) 0.7s, transform 1.2s var(--ease) 0.7s; }
-  .ridge .ridge-main { clip-path: inset(0 0 0 0); transition: clip-path 1.6s cubic-bezier(0.6, 0, 0.2, 1) 0.9s; }
-  .ridge .ridge-water, .ridge .ridge-shore { opacity: 1; transition: opacity 1.2s var(--ease) 1.8s; }
-  .ridge .picto-skier { transition: opacity 1s var(--ease) 2.6s; }
+  .ridge .ridge-sky { transition: opacity 1.4s var(--ease) 0.4s, transform 1.6s var(--ease) 0.4s; }
+  .ridge .ridge-far2 { transition: opacity 0.9s var(--ease) 0.6s, transform 1.1s var(--ease) 0.6s; }
+  .ridge .ridge-far1 { transition: opacity 0.9s var(--ease) 0.8s, transform 1.1s var(--ease) 0.8s; }
+  .ridge .ridge-main { transition: opacity 0.9s var(--ease) 1s, transform 1.1s var(--ease) 1s; }
+  .ridge .ridge-water, .ridge .ridge-shore { opacity: 1; transition: opacity 1.2s var(--ease) 1.6s; }
+  .ridge .ridge-track { clip-path: inset(0 0 0 0); transition: clip-path 2.4s cubic-bezier(0.5, 0, 0.3, 1) 2s; }
   .hero-portrait { transition: opacity 0.7s var(--ease) 1.4s, transform 0.9s var(--ease) 1.4s; }
 }
 .js .hero-title .hero-title-line {
@@ -194,9 +206,9 @@
   .js .hero-figure:not(.is-live) {
     .hero-cover { clip-path: polygon(19% 0, 100% 0, 100% 100%, 0 100%); }
     .hero-cut { clip-path: none; }
-    .ridge .ridge-sky, .ridge .ridge-far { opacity: 1; transform: none; }
-    .ridge .ridge-main { clip-path: none; }
-    .ridge .ridge-water, .ridge .ridge-shore, .ridge .picto-skier { opacity: 1; }
+    .ridge .ridge-sky, .ridge .ridge-far2, .ridge .ridge-far1, .ridge .ridge-main { opacity: 1; transform: none; }
+    .ridge .ridge-water, .ridge .ridge-shore { opacity: 1; }
+    .ridge .ridge-track { clip-path: none; }
     .hero-portrait { opacity: 1; transform: none; }
   }
   .js .hero-title .hero-title-line { opacity: 1; transform: none; }

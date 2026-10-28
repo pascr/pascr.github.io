@@ -12,7 +12,7 @@ layout: default
         <p class="hero-kicker mono"><span class="hero-dot" aria-hidden="true"></span>{{ author.role }}</p>
 
         <figure class="hero-figure" data-hero>
-            <div class="hero-cover" role="img" aria-label="Line drawing of the Alps skyline seen across Lake Geneva from Lausanne">
+            <div class="hero-cover" role="img" aria-label="Flat illustration of the Alps across Lake Geneva, with a ski-touring track up to the summit">
                 {% include ridge.svg %}
             </div>
             <svg class="hero-cut" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -35,7 +35,8 @@ layout: default
             <div><dt>Based in</dt><dd>{{ author.location }}</dd></div>
             <div><dt>Coordinates</dt><dd>{{ author.coordinates }}</dd></div>
             <div><dt>Shipping since</dt><dd>{{ first_year }} <span class="muted">/ {{ years }} yrs</span></dd></div>
-            <div><dt>Elsewhere</dt><dd>{% include social-links.html author=author compact=true %}</dd></div>
+            <div><dt>Off the clock</dt><dd>Triathlete, Ironman finisher, ski tourer</dd></div>
+            <div class="hero-meta-wide"><dt>Elsewhere</dt><dd>{% include social-links.html author=author compact=true %}</dd></div>
         </dl>
     </div>
 </section>
