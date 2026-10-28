@@ -61,20 +61,19 @@
     transform: translate3d(calc(var(--px, 0) * 1px), calc(var(--py, 0) * 1px), 0);
     will-change: transform;
   }
-  path, line {
-    fill: none;
-    stroke: var(--ink);
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    vector-effect: non-scaling-stroke;
+  .ridge-sun { fill: var(--sun); }
+  .far2 { fill: var(--far2); }
+  .far1 { fill: var(--far1); }
+  @for $i from 0 through 7 { .f#{$i} { fill: var(--m#{$i}); } }
+  .ridge-lake { fill: var(--lake); }
+  .ridge-reflection { opacity: 0.6; }
+  .ridge-shoreland { fill: var(--shore); }
+  .picto {
+    path, circle { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
+    .body path { stroke-width: 9; }
+    .gear path, .gear circle { stroke-width: 4.5; }
+    .head { fill: var(--ink); stroke: none; }
   }
-  .ridge-far path { stroke-width: 1; opacity: 0.32; }
-  .ridge-line { stroke-width: 1.6; }
-  .ridge-mass { stroke: none; fill: var(--ink); opacity: 0.05; }
-  .ridge-horizon { stroke-width: 1; opacity: 0.5; }
-  .ridge-reflection { stroke-width: 1; opacity: 0.22; stroke-dasharray: 0.004 0.006; }
-  .ridge-shoreline { stroke-width: 1; opacity: 0.45; }
-  .picto path, .picto circle { stroke-width: 1.5; }
 }
 .hero-cut {
   position: absolute;
@@ -167,18 +166,20 @@
 .js .hero-figure:not(.is-live) {
   .hero-cover { clip-path: polygon(19% 0, 19% 0, 0 100%, 0 100%); }
   .hero-cut { clip-path: inset(150% 0 0 0); }
-  .ridge .ridge-far path, .ridge .ridge-line { stroke-dasharray: 1; stroke-dashoffset: 1; }
-  .ridge .ridge-mass, .ridge .ridge-water, .ridge .ridge-shore, .ridge .picto-skier { opacity: 0; }
+  .ridge .ridge-sky { opacity: 0; transform: translate3d(0, 2rem, 0); }
+  .ridge .ridge-far { opacity: 0; transform: translate3d(0, 1.5rem, 0); }
+  .ridge .ridge-main { clip-path: inset(100% 0 0 0); }
+  .ridge .ridge-water, .ridge .ridge-shore, .ridge .picto-skier { opacity: 0; }
   .hero-portrait { opacity: 0; transform: translate3d(0, 1rem, 0) scale(0.96); }
 }
 .js .hero-figure.is-live {
   .hero-cover { transition: clip-path 0.9s cubic-bezier(0.7, 0, 0.2, 1); }
   .hero-cut { clip-path: inset(-50% 0 0 0); transition: clip-path 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.05s; }
-  .ridge .ridge-far path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 2.2s cubic-bezier(0.5, 0, 0.3, 1) 0.5s; }
-  .ridge .ridge-line { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 2.6s cubic-bezier(0.5, 0, 0.3, 1) 0.7s; }
-  .ridge .ridge-mass { transition: opacity 1.2s var(--ease) 2.4s; }
-  .ridge .ridge-water, .ridge .ridge-shore { opacity: 1; transition: opacity 1.4s var(--ease) 2.2s; }
-  .ridge .picto-skier { transition: opacity 1s var(--ease) 3s; }
+  .ridge .ridge-sky { transition: opacity 1.2s var(--ease) 0.5s, transform 1.4s var(--ease) 0.5s; }
+  .ridge .ridge-far { transition: opacity 1s var(--ease) 0.7s, transform 1.2s var(--ease) 0.7s; }
+  .ridge .ridge-main { clip-path: inset(0 0 0 0); transition: clip-path 1.6s cubic-bezier(0.6, 0, 0.2, 1) 0.9s; }
+  .ridge .ridge-water, .ridge .ridge-shore { opacity: 1; transition: opacity 1.2s var(--ease) 1.8s; }
+  .ridge .picto-skier { transition: opacity 1s var(--ease) 2.6s; }
   .hero-portrait { transition: opacity 0.7s var(--ease) 1.4s, transform 0.9s var(--ease) 1.4s; }
 }
 .js .hero-title .hero-title-line {
@@ -193,8 +194,9 @@
   .js .hero-figure:not(.is-live) {
     .hero-cover { clip-path: polygon(19% 0, 100% 0, 100% 100%, 0 100%); }
     .hero-cut { clip-path: none; }
-    .ridge .ridge-far path, .ridge .ridge-line { stroke-dasharray: none; stroke-dashoffset: 0; }
-    .ridge .ridge-mass, .ridge .ridge-water, .ridge .ridge-shore, .ridge .picto-skier { opacity: 1; }
+    .ridge .ridge-sky, .ridge .ridge-far { opacity: 1; transform: none; }
+    .ridge .ridge-main { clip-path: none; }
+    .ridge .ridge-water, .ridge .ridge-shore, .ridge .picto-skier { opacity: 1; }
     .hero-portrait { opacity: 1; transform: none; }
   }
   .js .hero-title .hero-title-line { opacity: 1; transform: none; }

@@ -17,6 +17,15 @@
   --code-muted:   #8e887c;
   --selection:    #d9230f;
 
+  // Hero illustration: facet shades f0 (lit) to f7 (shadow), lake, far ranges, shore.
+  $lit: #e2ddd2; $shadow: #2a2f3a;
+  @for $i from 0 through 7 { --m#{$i}: #{mix($shadow, $lit, $i * 100% / 7)}; }
+  --lake:         #c3ccd1;
+  --far1:         #b7b9bc;
+  --far2:         #cfcdc7;
+  --shore:        #e5e0d4;
+  --sun:          #d9230f;
+
   --font-sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
@@ -44,6 +53,13 @@
   --code-ink:     #ece7dc;
   --code-muted:   #7f7a70;
   --selection:    #ff5a4e;
+  $lit-d: #9ba1ab; $shadow-d: #121418;
+  @for $i from 0 through 7 { --m#{$i}: #{mix($shadow-d, $lit-d, $i * 100% / 7)}; }
+  --lake:         #181d22;
+  --far1:         #2a2d33;
+  --far2:         #1f2126;
+  --shore:        #1b1917;
+  --sun:          #ff5a4e;
   color-scheme: dark;
 }
 
