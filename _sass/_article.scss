@@ -30,6 +30,12 @@
 }
 
 .post-body { max-width: 46rem; }
+.post-source {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+}
 
 .post-footer {
   margin-top: clamp(3rem, 6vw, 5rem);

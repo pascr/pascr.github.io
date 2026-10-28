@@ -25,3 +25,14 @@ Then open http://localhost:4000.
 | `_layouts/`, `_includes/` | Page skeletons and reusable fragments. |
 | `_sass/`, `css/screen.scss` | Styles. Design tokens (colours, fonts) are in `_sass/_tokens.scss`. |
 | `js/site.js` | Theme toggle, scroll reveal, reading progress, side table of contents. |
+
+## Importing LinkedIn posts
+
+Request your data archive from LinkedIn (Settings, Data privacy, "Get a copy of your data"). The complete archive, the one that includes `Shares.csv` and `Articles/`, is the one to use:
+
+```bash
+python3 scripts/linkedin_to_posts.py ~/Downloads/Complete_LinkedInDataExport.zip --dry-run   # preview
+python3 scripts/linkedin_to_posts.py ~/Downloads/Complete_LinkedInDataExport.zip             # write drafts
+```
+
+Each post lands in `_posts/` with `draft: true`, a guessed title and a `linkedin_url` back to the original. Review, give it a real title and tags, remove the draft flag, and it is live.

@@ -29,6 +29,7 @@ exclude:
   - README.md
   - LICENSE
   - .travis.yml
+  - scripts
 
 plugins:
   - jekyll-mentions

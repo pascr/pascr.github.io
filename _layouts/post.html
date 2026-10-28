@@ -25,6 +25,9 @@ layout: default
 
     <div class="post-body prose" itemprop="articleBody">
         {{ content }}
+        {% if page.linkedin_url %}
+        <p class="post-source mono">First published on <a href="{{ page.linkedin_url }}" rel="noopener">LinkedIn</a>.</p>
+        {% endif %}
     </div>
 
     <footer class="post-footer">
