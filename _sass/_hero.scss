@@ -1,28 +1,61 @@
 .hero {
-  padding-top: clamp(1.5rem, 4vw, 3.5rem);
-  padding-bottom: clamp(2rem, 5vw, 4rem);
+  position: relative;
+  min-height: calc(100vh - var(--top-h));
+  min-height: calc(100svh - var(--top-h));
+  display: flex;
+  align-items: flex-end;
+  padding-top: clamp(5rem, 12vw, 9rem);
+  padding-bottom: clamp(2rem, 4vw, 3.5rem);
   overflow: hidden;
+  isolation: isolate;
+}
+.hero-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+// keeps the small text legible where the near streams run
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 46%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, var(--paper) 70%);
 }
 
 .hero-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-template-areas:
-    "kicker kicker kicker kicker kicker figure figure figure figure figure figure figure"
     "title  title  title  title  title  title  title  title  title  title  title  title"
     "lede   lede   lede   lede   lede   lede   meta   meta   meta   meta   meta   meta";
   column-gap: 1.5rem;
-  row-gap: 0;
 }
 
+.hero-top {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: none;
+  > * { pointer-events: auto; }
+}
 .hero-kicker {
-  grid-area: kicker;
-  align-self: start;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   color: var(--ink-2);
-  padding-top: 0.5rem;
 }
 .hero-dot {
   width: 0.5rem;
@@ -37,67 +70,16 @@
   100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
 }
 
-.hero-figure {
-  grid-area: figure;
-  position: relative;
-  margin: 0;
-  z-index: 0;
-}
-.hero-cover {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1.6;
-  overflow: hidden;
-  background: var(--paper-2);
-  clip-path: polygon(19% 0, 100% 0, 100% 100%, 0 100%);
-}
-.ridge {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  color: var(--ink);
-  > g[data-parallax] {
-    transform: translate3d(calc(var(--px, 0) * 1px), calc(var(--py, 0) * 1px), 0);
-    will-change: transform;
-  }
-  pattern line { stroke: currentColor; stroke-width: 1.5; }
-  .face { stroke: none; }
-  .face-north { fill: url(#hatch-h); }
-  .face-east { fill: url(#hatch-d); }
-  .divider, .outline, .baseline { fill: none; stroke: currentColor; stroke-linejoin: round; stroke-linecap: round; }
-  .divider { stroke-width: 2.2; }
-  .outline { stroke-width: 3; }
-  .baseline { stroke-width: 2.2; }
-}
-.hero-cut {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-  line { stroke: var(--red); stroke-width: 2; }
-}
 .hero-portrait {
-  position: absolute;
-  right: 6%;
-  bottom: -12%;
-  width: 24%;
+  width: 3.25rem;
   aspect-ratio: 1;
   object-fit: cover;
-  border: 3px solid var(--paper);
-  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.18);
-  transform: translate3d(calc(var(--px, 0) * 1px), calc(var(--py, 0) * 1px), 0);
-  will-change: transform;
+  border: 2px solid var(--paper);
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.16);
 }
 
 .hero-title {
   grid-area: title;
-  position: relative;
-  z-index: 1;
-  margin-top: -0.3em;
   font-size: clamp(4rem, calc(14.5vw), 15rem);
   font-weight: 800;
   font-stretch: 72%;
@@ -105,10 +87,16 @@
   letter-spacing: -0.015em;
   text-transform: uppercase;
   color: var(--ink);
-  pointer-events: none;
 }
 .hero-title-line { display: block; }
 .hero-title-line + .hero-title-line { padding-left: 0.04em; }
+.js .hero-title .hero-title-line {
+  opacity: 0;
+  transform: translate3d(0, 0.25em, 0);
+  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
+}
+.js .hero-title.is-live .hero-title-line { opacity: 1; transform: none; }
+.js .hero-title.is-live .hero-title-line + .hero-title-line { transition-delay: 0.12s; }
 
 .hero-lede {
   grid-area: lede;
@@ -156,62 +144,22 @@
   }
 }
 
-// Entrance: the card wipes in along the cut and the red line appears, then the
-// ridges draw themselves, far to near, and the lake fades in. JS only, so a
-// static render shows everything at once.
-.js .hero-figure:not(.is-live) {
-  .hero-cover { clip-path: polygon(19% 0, 19% 0, 0 100%, 0 100%); }
-  .hero-cut { clip-path: inset(150% 0 0 0); }
-  .ridge .outline { stroke-dasharray: 1; stroke-dashoffset: 1; }
-  .ridge .face, .ridge .divider, .ridge .baseline { opacity: 0; }
-  .hero-portrait { opacity: 0; transform: translate3d(0, 1rem, 0) scale(0.96); }
-}
-.js .hero-figure.is-live {
-  .hero-cover { transition: clip-path 0.9s cubic-bezier(0.7, 0, 0.2, 1); }
-  .hero-cut { clip-path: inset(-50% 0 0 0); transition: clip-path 0.9s cubic-bezier(0.6, 0, 0.2, 1) 0.05s; }
-  .ridge .outline { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 2.2s cubic-bezier(0.55, 0, 0.25, 1) 0.5s; }
-  .ridge .baseline { opacity: 1; transition: opacity 0.8s var(--ease) 0.6s; }
-  .ridge .divider { opacity: 1; transition: opacity 0.8s var(--ease) 2.2s; }
-  .ridge .face { opacity: 1; transition: opacity 1.2s var(--ease) 2.5s; }
-  .hero-portrait { transition: opacity 0.7s var(--ease) 1.4s, transform 0.9s var(--ease) 1.4s; }
-}
-.js .hero-title .hero-title-line {
-  opacity: 0;
-  transform: translate3d(0, 0.25em, 0);
-  transition: opacity 0.8s var(--ease), transform 0.9s var(--ease);
-}
-.js .hero-title.is-live .hero-title-line { opacity: 1; transform: none; }
-.js .hero-title.is-live .hero-title-line + .hero-title-line { transition-delay: 0.12s; }
-
 @media (prefers-reduced-motion: reduce) {
-  .js .hero-figure:not(.is-live) {
-    .hero-cover { clip-path: polygon(19% 0, 100% 0, 100% 100%, 0 100%); }
-    .hero-cut { clip-path: none; }
-    .ridge .outline { stroke-dasharray: none; stroke-dashoffset: 0; }
-    .ridge .face, .ridge .divider, .ridge .baseline { opacity: 1; }
-    .hero-portrait { opacity: 1; transform: none; }
-  }
   .js .hero-title .hero-title-line { opacity: 1; transform: none; }
-  .ridge > g[data-parallax], .hero-portrait { transform: none !important; }
+  .hero-dot { animation: none; }
 }
 
 @media (max-width: 63.99em) {
+  .hero { padding-top: clamp(9rem, 32vw, 14rem); }
   .hero-grid {
     grid-template-areas:
-      "kicker kicker kicker kicker kicker kicker kicker kicker kicker kicker kicker kicker"
-      "figure figure figure figure figure figure figure figure figure figure figure figure"
       "title  title  title  title  title  title  title  title  title  title  title  title"
       "lede   lede   lede   lede   lede   lede   lede   lede   lede   lede   lede   lede"
       "meta   meta   meta   meta   meta   meta   meta   meta   meta   meta   meta   meta";
   }
-  .hero-kicker { padding-bottom: 1rem; }
-  .hero-figure { margin-right: calc(var(--gutter) * -1); }
-  .hero-cover { aspect-ratio: 1.5; }
-  .hero-portrait { bottom: 8%; right: 5%; }
-  .hero-title { margin-top: 0.35em; font-size: clamp(3.75rem, calc(17vw), 10rem); }
+  .hero-title { font-size: clamp(3.75rem, calc(17vw), 10rem); }
   .hero-meta { margin-top: 1.75rem; }
 }
 @media (max-width: 39.99em) {
-  .hero-portrait { right: 4%; width: 28%; }
   .hero-meta dd { font-size: 0.875rem; }
 }
