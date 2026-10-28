@@ -17,16 +17,6 @@
   z-index: 0;
   pointer-events: none;
 }
-// keeps the small text legible where the near streams run
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 46%;
-  z-index: 0;
-  pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, var(--paper) 70%);
-}
 
 .hero-grid {
   position: relative;
