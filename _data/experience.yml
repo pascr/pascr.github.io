@@ -1,6 +1,9 @@
-# Career timeline, newest first. Rendered by _includes/experience.html.
-# Each entry: company, location, year (big numeral), roles (period + title), summary, highlights, link.
+# Career timeline, newest first. Rendered by _includes/experience.html and as the
+# altitude profile on the home page (year = x, altitude 1..7 = y, slug = anchor).
 - company:  Visium SA
+  slug:     visium
+  short:    Visium
+  altitude: 6.4
   location: Lausanne, Switzerland
   year:     2022
   current:  true
@@ -23,6 +26,9 @@
   technologies: Agentic and Generative AI, NLU, LLMs, RAG, Agno, Python, FastAPI, TypeScript, React, MLOps, Kubernetes, Terraform, Pulumi, AWS, GCP, Azure
 
 - company:  ZF Group
+  slug:     zf
+  short:    ZF
+  altitude: 5.4
   location: Bern, Switzerland
   year:     2021
   roles:
@@ -39,6 +45,9 @@
   technologies: Scala, Akka, Kafka, Kubernetes, Docker, Postgres, MongoDB, AWS, gRPC, DDD, Event-storming, Serverless, Python, NodeJS, Go, Terraform, Helm, Bash, Spark, Sagemaker
 
 - company:  Bestmile
+  slug:     bestmile
+  short:    Bestmile
+  altitude: 4.8
   location: Lausanne, Switzerland
   year:     2017
   roles:
@@ -65,6 +74,9 @@
   technologies: Scala, Akka, Kafka, Kubernetes, Docker, Postgres, MongoDB, AWS, Azure, GCP, gRPC, DDD, Event-storming, Serverless, Python, NodeJS, Go, Terraform, Helm, Bash, Spark, Sagemaker, Vehicle SDKs, OEM APIs
 
 - company:  Easel TV
+  slug:     easel
+  short:    Easel TV
+  altitude: 3.6
   location: London, United Kingdom
   year:     2014
   roles:
@@ -92,6 +104,9 @@
   technologies: Scala, Play, Akka, Akka-Persistence, Slick, Sbt, ScalaTest, Spec2, Guice, JavaScript, AngularJS, NodeJS, Neo4j, ElasticSearch, MongoDB, Postgres, AWS, Azure
 
 - company:  SICPA Security Solutions SA
+  slug:     sicpa
+  short:    SICPA
+  altitude: 2.2
   location: Lausanne, Switzerland
   year:     2008
   roles:
@@ -105,6 +120,9 @@
   technologies: JEE6, Maven, Subversion, Spring, Hibernate, Guice, JBehave, Swing, Ruby, Rails, Grails, MongoDB, MySQL, MSSQL, JBoss, Tomcat, Jetty, Redis, JavaScript, Git, TDD, BDD, Puppet
 
 - company:  Bobst SA
+  slug:     bobst
+  short:    Bobst
+  altitude: 1.2
   location: Lausanne, Switzerland
   year:     2004
   roles:

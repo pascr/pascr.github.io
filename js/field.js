@@ -209,8 +209,15 @@
       var waveW = isRed ? 1.6 : 0.8 + 0.6 * depth;
       var waveA = isRed ? 0.95 : 0.14 + 0.3 * depth;
       var i, shaped = false;
+      var exitX = W * 0.92, diveFrom = W * 0.78;
       for (i = 0; i < M; i++) {
         var wx = i / (M - 1) * W, wy = waveY(wx, k, t, centre, spacing, swing, ph);
+        if (isRed && wx > diveFrom) {
+          /* the red trace leaves the band and dives to the bottom right, where the page's line begins */
+          var dv = Math.min(1, (wx - diveFrom) / (exitX - diveFrom)); dv = dv * dv * (3 - 2 * dv);
+          wy = wy + (H + 4 - wy) * dv;
+          wx = Math.min(wx, exitX);
+        }
         if (f && s > 0) {
           var dist = strokeAt(f, wx, tg);
           var w = s * (dist >= margin ? 0 : 1 - dist / margin);
