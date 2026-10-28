@@ -23,6 +23,7 @@ Then open http://localhost:4000.
 | `read-me.md` | The personal user manual, served at `/readme/`. |
 | `_posts/` | Blog posts, served under `/blog/`. |
 | `_layouts/`, `_includes/` | Page skeletons and reusable fragments. |
+| `scripts/mountain.py` | Writes the hero drawing, `_includes/ridge.svg`, from hand-drawn points. |
 | `_sass/`, `css/screen.scss` | Styles. Design tokens (colours, fonts) are in `_sass/_tokens.scss`. |
 | `js/site.js` | Theme toggle, scroll reveal, reading progress, side table of contents. |
 
