@@ -23,7 +23,7 @@
     return null;
   }
   function readColors() {
-    var cs = getComputedStyle(document.documentElement);
+    var cs = getComputedStyle(canvas);   /* inherits the page's tokens, so a themed section recolours the line */
     ink = hexToRgb(cs.getPropertyValue('--ink')) || ink;
     red = cs.getPropertyValue('--red').trim() || red;
   }

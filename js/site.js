@@ -3,6 +3,7 @@
   'use strict';
 
   var root = document.documentElement;
+  document.body.classList.add('js');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Theme toggle: pins light or dark in localStorage; clearing follows the system again. */

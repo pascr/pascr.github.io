@@ -89,3 +89,5 @@ Temporary Items
 _site/
 .sass-cache/
 .jekyll-metadata
+# stand-in photographs for previews, not for the real site
+assets/placeholder/
