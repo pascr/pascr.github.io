@@ -7,7 +7,7 @@ language:     "en"
 
 baseurl:      ""
 url:          "https://sliceofcode.net"
-permalink:    /blog/:categories/:title
+permalink:    /blog/:title/
 cover:        /assets/alps-cover.jpg
 
 # Build settings

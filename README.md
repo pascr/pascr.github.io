@@ -21,7 +21,7 @@ Then open http://localhost:4000.
 | `_data/experience.yml` | Career timeline rendered on the home page. |
 | `_data/authors.yml` | Author profile, links and portrait. |
 | `read-me.md` | The personal user manual, served at `/readme/`. |
-| `_posts/` | Blog posts, served under `/blog/`. |
+| `_posts/` | Blog posts, served at `/blog/<slug>/`. Front matter: title, date, category, tags, excerpt, optional `linkedin_url`. |
 | `_layouts/`, `_includes/` | Page skeletons and reusable fragments. `default.html` is the shared shell. |
 | `_sass/_strip.scss` | The design: colours, type, the strip, the column and the pieces. |
 | `js/field.js` | The live seismograph strip at the bottom of every page. |
