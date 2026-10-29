@@ -11,7 +11,7 @@
   var W = 0, H = 0, dpr = 1;
   var ink = { r: 21, g: 19, b: 15 }, red = '#d9230f';
   var pointer = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
-  var stir = 0, lastY = window.scrollY;
+  var stir = 0, lastY = window.scrollY, phase = 0, lastNow = performance.now();
   var running = false, visible = true, raf = 0, t0 = performance.now(), born = t0;
 
   function hexToRgb(h) {
@@ -42,14 +42,15 @@
 
   function draw(now) {
     var t = (now - t0) / 1000;
+    if (!running) { phase = t; }
     var fade = reduceMotion ? 1 : Math.min(1, (now - born) / 1600);
-    var tt = t * (1 + 3 * stir);
+    var tt = phase;
     ctx.clearRect(0, 0, W, H);
 
     var lines = W < 640 ? 12 : 16;
     var centre = H * ((W < 640 ? 0.36 : 0.44) + (pointer.y - 0.5) * 0.04);   /* the band sits across the name */
     var spacing = W < 640 ? 7 : 9;
-    var swing = Math.min(150, H * 0.17);
+    var swing = Math.min(150, H * 0.17) * (1 + 0.6 * stir);
     var redLine = 6;
     var inkRGB = ink.r + ',' + ink.g + ',' + ink.b;
 
@@ -81,7 +82,9 @@
     pointer.x += (pointer.tx - pointer.x) * 0.04;
     pointer.y += (pointer.ty - pointer.y) * 0.04;
     var dy = Math.abs(window.scrollY - lastY); lastY = window.scrollY;
-    stir = Math.max(stir * 0.94, Math.min(1, dy / 60));
+    stir = Math.max(stir * 0.965, Math.min(1, dy / 140));
+    var dt = Math.min(0.05, (now - lastNow) / 1000); lastNow = now;
+    phase += dt * (1 + 0.7 * stir);   /* time runs a little faster while scrolling, and never jumps */
     draw(now);
     raf = window.requestAnimationFrame(loop);
   }
