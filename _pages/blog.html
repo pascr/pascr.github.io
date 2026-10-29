@@ -7,16 +7,14 @@ permalink: /blog/
 excerpt: Pieces of code and reflexions about software engineering.
 ---
 {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
-<section class="section section--first" aria-labelledby="blog-title">
-    <div class="wrap section-grid">
-        <header class="section-head" data-reveal>
-            <span class="section-index mono">03</span>
-            <h1 id="blog-title" class="section-title">Writing</h1>
-            <p class="section-note mono">{{ posts | size }} posts, <a href="{{ '/feed.xml' | relative_url }}">RSS</a></p>
-        </header>
-        <div class="section-body" data-reveal>
-            <p class="prose prose--lead blog-lede">{{ site.description }}</p>
-            {% include post-list.html posts=posts %}
-        </div>
-    </div>
-</section>
+<article class="piece">
+    <header class="piece-head" data-reveal>
+        <h1 class="piece-title">Writing</h1>
+        <p class="part-lead">{{ posts | size }} pieces. <a href="{{ '/feed.xml' | relative_url }}">RSS</a>.</p>
+    </header>
+    <ul class="pieces">
+        {% for post in posts %}
+        <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %Y" }}</time></li>
+        {% endfor %}
+    </ul>
+</article>

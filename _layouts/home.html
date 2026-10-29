@@ -1,27 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ site.language | downcase }}">
-{% include head.html %}
-<body class="strip">
+---
+layout: default
+---
 {% assign author = site.data.authors[page.author] | default: site.data.authors['default'] %}
 {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
 {% assign first_year = site.data.experience | map: "year" | sort | first %}
 {% assign readme = site.pages | where: "menutitle", "Readme" | first %}
-
-<a class="skip" href="#main">Skip to content</a>
-<canvas class="seismo" data-field aria-hidden="true"></canvas>
-
-<header class="top-line">
-    <a class="top-name" href="{{ '/' | relative_url }}">Pascal Rodriguez</a>
-    <nav class="top-nav" aria-label="Primary">
-        <a href="#now">Now</a>
-        <a href="#before">Before</a>
-        <a href="#writing">Writing</a>
-        <a href="{{ readme.url | relative_url }}">Readme</a>
-        <button type="button" data-theme-toggle aria-label="Switch theme">Light</button>
-    </nav>
-</header>
-
-<main id="main" class="column" tabindex="-1">
 
 <section class="opening" aria-label="Introduction" data-hero>
     <p class="opening-line">I build trusted AI for industries that cannot afford a wrong answer, and the engineering teams that keep it running.</p>
@@ -83,13 +66,3 @@
 </section>
 {% endif %}
 
-<footer class="end">
-    <p>Pascal Rodriguez, Lausanne. <a href="https://github.com/pascr/pascr.github.io">Source</a>.</p>
-</footer>
-</main>
-
-<script src="{{ '/js/site.js' | relative_url }}" defer></script>
-<script src="{{ '/js/field.js' | relative_url }}" defer></script>
-{% include analytics.html %}
-</body>
-</html>

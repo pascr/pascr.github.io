@@ -1,18 +1,12 @@
 ---
 layout: default
 ---
-<article class="page wrap{% if page.numbered %} page--numbered{% endif %}">
-    <header class="page-header" data-reveal>
-        {% if page.kicker %}<p class="post-kicker mono">{{ page.kicker }}</p>{% endif %}
-        <h1 class="page-title">{{ page.title }}</h1>
+<article class="piece{% if page.numbered %} piece--numbered{% endif %}">
+    <header class="piece-head" data-reveal>
+        {% if page.kicker %}<p class="piece-kicker">{{ page.kicker }}</p>{% endif %}
+        <h1 class="piece-title">{{ page.title }}</h1>
     </header>
-    <div class="page-grid">
-        <nav class="toc-side" aria-label="On this page" data-toc hidden>
-            <p class="toc-side-label mono">Contents</p>
-            <ol class="toc-side-list"></ol>
-        </nav>
-        <div class="page-body prose{% if page.numbered %} prose--numbered{% endif %}" data-toc-source>
-            {{ content }}
-        </div>
+    <div class="prose{% if page.numbered %} prose--numbered{% endif %}">
+        {{ content }}
     </div>
 </article>

@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="{% if page.language %}{{ page.language | downcase }}{% else %}{{ site.language | downcase }}{% endif %}">
 {% include head.html %}
-<body class="layout-{{ page.layout | default: "default" }}">
-    <a class="skip" href="#main">Skip to content</a>
-    <div class="progress" aria-hidden="true"><span></span></div>
-    {% include header.html %}
-    <main id="main" class="site-main" tabindex="-1">
-        {{ content }}
-    </main>
-    {% include footer.html %}
-    <script src="{{ '/js/site.js' | relative_url }}" defer></script>
-    {% include analytics.html %}
+<body class="strip layout-{{ page.layout | default: 'default' }}">
+{% assign readme = site.pages | where: "menutitle", "Readme" | first %}
+<a class="skip" href="#main">Skip to content</a>
+<canvas class="seismo" data-field aria-hidden="true"></canvas>
+
+<header class="top-line">
+    <a class="top-name" href="{{ '/' | relative_url }}">Pascal Rodriguez</a>
+    <nav class="top-nav" aria-label="Primary">
+        <a href="{{ '/' | relative_url }}#now">Now</a>
+        <a href="{{ '/' | relative_url }}#before">Before</a>
+        <a href="{{ '/blog/' | relative_url }}" {% if page.url == '/blog/' %}aria-current="page"{% endif %}>Writing</a>
+        {% if readme %}<a href="{{ readme.url | relative_url }}" {% if page.url == readme.url %}aria-current="page"{% endif %}>Readme</a>{% endif %}
+        <button type="button" data-theme-toggle aria-label="Switch theme">Light</button>
+    </nav>
+</header>
+
+<main id="main" class="column" tabindex="-1">
+{{ content }}
+<footer class="end">
+    <p>Pascal Rodriguez, Lausanne. <a href="{{ '/feed.xml' | relative_url }}">RSS</a> · <a href="https://github.com/pascr/pascr.github.io">Source</a>.</p>
+</footer>
+</main>
+
+<script src="{{ '/js/site.js' | relative_url }}" defer></script>
+<script src="{{ '/js/field.js' | relative_url }}" defer></script>
+{% include analytics.html %}
 </body>
 </html>

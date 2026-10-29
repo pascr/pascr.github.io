@@ -7,8 +7,12 @@
   --fg-3: #6f7b91;
   --rule: rgba(233, 237, 244, 0.14);
   --trace: #ffb648;
-  --ink: #e9edf4;          // the field script reads these two
-  --red: #ffb648;
+  // bridge to the shared prose and code styles
+  --ink: var(--fg); --ink-2: var(--fg-2); --muted: var(--fg-3); --red: var(--trace);
+  --paper: var(--bg); --paper-2: rgba(233, 237, 244, 0.07); --red-soft: rgba(255, 182, 72, 0.16);
+  --rule-strong: rgba(233, 237, 244, 0.4);
+  --code-bg: #060a12; --code-ink: #e9edf4; --code-muted: #6f7b91;
+  --font-mono: var(--font); --font-sans: var(--font);
   --font: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   background: var(--bg);
   color: var(--fg);
@@ -31,8 +35,8 @@
   --fg-3: #74809a;
   --rule: rgba(11, 18, 32, 0.14);
   --trace: #c2410c;
-  --ink: #0b1220;
-  --red: #c2410c;
+  --paper-2: rgba(11, 18, 32, 0.06); --red-soft: rgba(194, 65, 12, 0.14); --rule-strong: rgba(11, 18, 32, 0.4);
+  --code-bg: #0b1220; --code-ink: #e9edf4; --code-muted: #8a94a8;
 }
 :root[data-theme="light"] .strip { @include strip-light; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .strip { @include strip-light; } }
@@ -116,3 +120,19 @@
   .top-line { flex-wrap: wrap; gap: 0.5rem 1rem; }
   .top-nav { gap: 0.4rem 1rem; font-size: 0.875rem; justify-content: flex-start; }
 }
+
+// Inner pages: a single piece in the column
+.piece { padding-top: 2rem; background: var(--bg); box-shadow: 0 0 48px 36px var(--bg); }
+.piece-head { margin-bottom: 2.5rem; }
+.piece-kicker { color: var(--fg-3); margin: 0 0 0.75rem; a { text-decoration: none; } }
+.piece-title { font-size: clamp(1.875rem, calc(1.3rem + 2vw), 3rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.025em; margin: 0 0 1rem; text-wrap: balance; }
+.strip .prose { max-width: none; font-size: 1.0625rem; color: var(--fg); }
+.strip .prose h2 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; }
+.strip .prose--numbered h2::before { font-family: var(--font); color: var(--trace); }
+.strip .prose code { background: var(--paper-2); }
+.strip .tags, .strip .mono { font-family: var(--font); }
+.piece-source { color: var(--fg-3); margin-top: 2.5rem; }
+.piece-foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--fg-2); }
+.piece-by { margin: 0 0 1rem; }
+.piece-nav { display: flex; flex-direction: column; gap: 0.5rem; a { text-decoration: none; } a:hover { color: var(--trace); } }
+.strip .notfound-suggestions { margin-top: 2.5rem; &[hidden] { display: none; } }

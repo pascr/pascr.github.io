@@ -4,22 +4,16 @@ title: Page not found
 permalink: /404.html
 visible: false
 ---
-<section class="notfound wrap">
-    <div class="notfound-grid">
-        <p class="notfound-code" aria-hidden="true">
-            <span>4</span><span class="notfound-slice">0</span><span>4</span>
-        </p>
-        <div class="notfound-body">
-            <p class="post-kicker mono">Error / 404</p>
-            <h1 class="notfound-title">This slice is missing.</h1>
-            <p class="prose prose--lead">The page you asked for does not exist, or it moved. The closest matches are listed below.</p>
-            <p><a class="button" href="{{ '/' | relative_url }}">Back to the start <span class="button-arrow" aria-hidden="true">→</span></a></p>
-        </div>
-    </div>
+<article class="piece">
+    <header class="piece-head">
+        <p class="piece-kicker">404</p>
+        <h1 class="piece-title">Nothing here.</h1>
+        <p class="part-lead">The page does not exist, or it moved. <a href="{{ '/' | relative_url }}">Back to the start.</a></p>
+    </header>
     <div class="notfound-suggestions" data-suggestions data-source="{{ '/api/posts.json' | relative_url }}" hidden>
-        <p class="footer-label mono">Did you mean</p>
-        <ol class="post-list" data-suggestion-list></ol>
+        <p class="part-lead">Did you mean</p>
+        <ul class="pieces" data-suggestion-list></ul>
     </div>
-</section>
+</article>
 <script src="{{ '/js/fuzzyset.js' | relative_url }}" defer></script>
 <script src="{{ '/js/notfound.js' | relative_url }}" defer></script>

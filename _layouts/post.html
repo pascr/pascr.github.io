@@ -4,47 +4,20 @@ layout: default
 {% assign author = site.data.authors[page.author] | default: site.data.authors['default'] %}
 {% assign words = content | strip_html | number_of_words %}
 {% assign minutes = words | divided_by: 200 | at_least: 1 %}
-
-<article class="post wrap" itemscope itemtype="http://schema.org/BlogPosting">
-    <header class="post-header" data-reveal>
-        <p class="post-kicker mono">
-            <a href="{{ '/blog/' | relative_url }}">Writing</a>
-            {% if page.category %}<span class="sep" aria-hidden="true">/</span><span>{{ page.category }}</span>{% endif %}
-            <span class="sep" aria-hidden="true">/</span>
-            <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>
-            <span class="sep" aria-hidden="true">/</span>
-            <span>{{ minutes }} min read</span>
-        </p>
-        <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
-        {% if page.tags.size > 0 %}
-        <ul class="tags mono" aria-label="Tags">
-            {% for tag in page.tags %}<li>#{{ tag }}</li>{% endfor %}
-        </ul>
-        {% endif %}
+<article class="piece" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="piece-head" data-reveal>
+        <p class="piece-kicker"><a href="{{ '/blog/' | relative_url }}">Writing</a> · <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%B %Y" }}</time> · {{ minutes }} min</p>
+        <h1 class="piece-title" itemprop="name headline">{{ page.title }}</h1>
     </header>
-
-    <div class="post-body prose" itemprop="articleBody">
+    <div class="prose" itemprop="articleBody">
         {{ content }}
-        {% if page.linkedin_url %}
-        <p class="post-source mono">First published on <a href="{{ page.linkedin_url }}" rel="noopener">LinkedIn</a>.</p>
-        {% endif %}
+        {% if page.linkedin_url %}<p class="piece-source">First published on <a href="{{ page.linkedin_url }}">LinkedIn</a>.</p>{% endif %}
     </div>
-
-    <footer class="post-footer">
-        {% include authorinfo.html author=author %}
-        <nav class="post-nav" aria-label="More posts">
-            {% if page.previous %}
-            <a class="post-nav-link" href="{{ page.previous.url | relative_url }}" rel="prev">
-                <span class="mono">Older</span>
-                <span class="post-nav-title">{{ page.previous.title }}</span>
-            </a>
-            {% else %}<span class="post-nav-link is-empty"></span>{% endif %}
-            {% if page.next %}
-            <a class="post-nav-link is-next" href="{{ page.next.url | relative_url }}" rel="next">
-                <span class="mono">Newer</span>
-                <span class="post-nav-title">{{ page.next.title }}</span>
-            </a>
-            {% else %}<span class="post-nav-link is-empty"></span>{% endif %}
+    <footer class="piece-foot">
+        <p class="piece-by">By <a href="{{ '/' | relative_url }}" itemprop="author">{{ author.name }}</a>, {{ author.role }}.</p>
+        <nav class="piece-nav" aria-label="More posts">
+            {% if page.previous %}<a href="{{ page.previous.url | relative_url }}" rel="prev">Older: {{ page.previous.title }}</a>{% endif %}
+            {% if page.next %}<a href="{{ page.next.url | relative_url }}" rel="next">Newer: {{ page.next.title }}</a>{% endif %}
         </nav>
     </footer>
 </article>
