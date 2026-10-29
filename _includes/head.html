@@ -5,7 +5,7 @@
     <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
 
-    {% if page.url == "/" %}{% assign page_title = site.title | append: " · " | append: page.title %}{% elsif page.title %}{% assign page_title = page.title | append: " · " | append: site.title %}{% else %}{% assign page_title = site.title %}{% endif %}
+    {% if page.url == "/" %}{% assign page_title = "Pascal Rodriguez, CTO & Partner at Visium, Lausanne" %}{% elsif page.title %}{% assign page_title = page.title | append: " · Pascal Rodriguez" %}{% else %}{% assign page_title = site.title %}{% endif %}
     <title>{{ page_title | escape }}</title>
     <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
 
@@ -16,11 +16,16 @@
     {% elsif site.keywords %}
     <meta name="keywords" content="{{ site.keywords | split: ' ' | join: ', ' | escape }}">
     {% endif %}
-    <meta name="robots" content="index,follow">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <meta name="author" content="Pascal Rodriguez">
+    <link rel="me" href="https://www.linkedin.com/in/pascr">
+    <link rel="me" href="https://github.com/pascr">
+    <link rel="alternate" type="text/plain" title="This site for language models" href="{{ '/llms.txt' | relative_url }}">
     <link rel="canonical" href="{{ page.url | replace: 'index.html', '' | absolute_url }}">
 
     {% include ogp.html %}
     {% include twitter-meta.html %}
+    {% include jsonld.html %}
 
     <script>
       /* Flag JS availability and apply the saved theme before first paint. */

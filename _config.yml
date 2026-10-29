@@ -1,7 +1,7 @@
 # Site settings
 title:        Slice of Code
 tagline:      Building trusted AI, one slice at a time
-description:  Pieces of code and reflexions about software engineering, by Pascal Rodriguez, CTO at Visium, in Lausanne.
+description:  Pascal Rodriguez, CTO & Partner at Visium in Lausanne. Building trusted agentic AI for regulated industries, and the engineering teams that run it. CV, writing and a personal readme.
 keywords:     pascal rodriguez techblog cto software engineering ai lausanne
 language:     "en"
 
@@ -28,7 +28,6 @@ exclude:
   - Gemfile.lock
   - README.md
   - LICENSE
-  - .travis.yml
   - scripts
 
 plugins:
