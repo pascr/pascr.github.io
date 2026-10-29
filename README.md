@@ -22,10 +22,10 @@ Then open http://localhost:4000.
 | `_data/authors.yml` | Author profile, links and portrait. |
 | `read-me.md` | The personal user manual, served at `/readme/`. |
 | `_posts/` | Blog posts, served under `/blog/`. |
-| `_layouts/`, `_includes/` | Page skeletons and reusable fragments. |
-| `_sass/`, `css/screen.scss` | Styles. Design tokens (colours, fonts) are in `_sass/_tokens.scss`. |
-| `js/site.js` | Theme toggle, scroll reveal, reading progress, side table of contents. |
-| `js/field.js` | The animated field of streams behind the home page hero. |
+| `_layouts/`, `_includes/` | Page skeletons and reusable fragments. `default.html` is the shared shell. |
+| `_sass/_strip.scss` | The design: colours, type, the strip, the column and the pieces. |
+| `js/field.js` | The live seismograph strip at the bottom of every page. |
+| `js/site.js` | Theme toggle, scroll reveal, table of contents. |
 
 ## Importing LinkedIn posts
 
