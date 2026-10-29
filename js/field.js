@@ -11,6 +11,7 @@
   var W = 0, H = 0, dpr = 1;
   var ink = { r: 21, g: 19, b: 15 }, red = '#d9230f';
   var pointer = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
+  var stir = 0, lastY = window.scrollY;
   var running = false, visible = true, raf = 0, t0 = performance.now(), born = t0;
 
   function hexToRgb(h) {
@@ -23,7 +24,7 @@
     return null;
   }
   function readColors() {
-    var cs = getComputedStyle(document.documentElement);
+    var cs = getComputedStyle(canvas);
     ink = hexToRgb(cs.getPropertyValue('--ink')) || ink;
     red = cs.getPropertyValue('--red').trim() || red;
   }
@@ -42,6 +43,7 @@
   function draw(now) {
     var t = (now - t0) / 1000;
     var fade = reduceMotion ? 1 : Math.min(1, (now - born) / 1600);
+    var tt = t * (1 + 3 * stir);
     ctx.clearRect(0, 0, W, H);
 
     var lines = W < 640 ? 12 : 16;
@@ -64,9 +66,9 @@
         var amp = swing * env * (1 - k * 0.035);
         var ph = (pointer.x - 0.5) * 0.8;
         var y = centre + k * spacing
-              + Math.sin(x * 0.011 + k * 0.6 + t * 0.35 + ph) * amp * 0.5
-              + Math.sin(x * 0.027 - k * 0.3 - t * 0.22) * amp * 0.25
-              + Math.sin(x * 0.0045 + k * 0.9 + t * 0.12) * amp * 0.35;
+              + Math.sin(x * 0.011 + k * 0.6 + tt * 0.35 + ph) * amp * 0.5
+              + Math.sin(x * 0.027 - k * 0.3 - tt * 0.22) * amp * 0.25
+              + Math.sin(x * 0.0045 + k * 0.9 + tt * 0.12) * amp * 0.35;
         if (x === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
       }
       ctx.stroke();
@@ -78,6 +80,8 @@
     if (!running) { return; }
     pointer.x += (pointer.tx - pointer.x) * 0.04;
     pointer.y += (pointer.ty - pointer.y) * 0.04;
+    var dy = Math.abs(window.scrollY - lastY); lastY = window.scrollY;
+    stir = Math.max(stir * 0.94, Math.min(1, dy / 60));
     draw(now);
     raf = window.requestAnimationFrame(loop);
   }
@@ -91,9 +95,9 @@
     if (raf) { window.cancelAnimationFrame(raf); raf = 0; }
   }
 
-  var host = canvas.closest('[data-hero]') || canvas.parentElement;
+  var host = getComputedStyle(canvas).position === 'fixed' ? window : (canvas.closest('[data-hero]') || canvas.parentElement);
   host.addEventListener('pointermove', function (e) {
-    var r = host.getBoundingClientRect();
+    var r = host === window ? { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight } : host.getBoundingClientRect();
     pointer.tx = (e.clientX - r.left) / r.width;
     pointer.ty = (e.clientY - r.top) / r.height;
   });
