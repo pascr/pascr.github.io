@@ -1,32 +1,28 @@
-default:                                                      # Fallback if nothing is specified
-  initial:      pascr                                         # used for author lookup in posts and for first two characters in the about page back button
-  name:         "Pascal Rodriguez"                            # used to display author name
-  cover:        /assets/alps-cover.jpg                        # OPTIONAL: defines location of cover image in about page
-  picture:      /assets/pascr.jpg                             # OPTIONAL: author picture
-  bio:          Building software one slice at a time         # OPTIONAL: text below author name in posts
-  location:     Lausanne, Switzerland                         # OPTIONAL: used to display location of the author
-  website:      "http://sliceofcode.net/about"                # OPTIONAL: link to the author of a post
-  email:                                                      # OPTIONAL: used in the about page
-  twitter:      pasc_r                                        # OPTIONAL: used in the about page
-  linkedin:     pascr                                         # OPTIONAL: used in the about page
-  xing:                                                       # OPTIONAL: used in the about page
-  github:       pascr                                         # OPTIONAL: used in the about page
-  stackoverflow:                                              # OPTIONAL: used in the about page
-  facebook:                                                   # OPTIONAL: used in the about page
-  gplus:                                                      # OPTIONAL: used in the about page
-  soundcloud:                                                 # OPTIONAL: used in the about page
-  youtube:                                                    # OPTIONAL: used in the about page
-  pinterest:                                                  # OPTIONAL: used in the about page
-  dribble:                                                    # OPTIONAL: used in the about page
-  behance:                                                    # OPTIONAL: used in the about page
+# Author profiles. Posts reference an author by key (see `author:` in front matter).
+default:
+  initial:      pascr
+  name:         "Pascal Rodriguez"
+  role:         "CTO & Partner, Visium SA"
+  cover:        /assets/alps-cover.jpg
+  picture:      /assets/pascr.jpg
+  bio:          Building trusted AI, one slice at a time
+  location:     Lausanne, Switzerland
+  coordinates:  "46.52° N, 6.63° E"
+  website:      "https://sliceofcode.net/"
+  email:
+  twitter:      pasc_r
+  linkedin:     pascr
+  github:       pascr
 pascr:
   initial:      pascr
   name:         "Pascal Rodriguez"
+  role:         "CTO & Partner, Visium SA"
   cover:        /assets/alps-cover.jpg
   picture:      /assets/pascr.jpg
-  bio:          Building software one slice at a time
-  location:     London
-  website:      "http://sliceodcode.net/about"
+  bio:          Building trusted AI, one slice at a time
+  location:     Lausanne, Switzerland
+  coordinates:  "46.52° N, 6.63° E"
+  website:      "https://sliceofcode.net/"
   twitter:      pasc_r
   github:       pascr
   linkedin:     pascr

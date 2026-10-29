@@ -1,0 +1,54 @@
+// Design tokens. Light is the default; dark follows the system unless a theme is pinned.
+
+:root {
+  --paper:        #f3efe6;
+  --paper-2:      #e9e4d8;
+  --paper-glass:  rgba(243, 239, 230, 0.84);
+  --ink:          #15130f;
+  --ink-2:        #4a463f;
+  --muted:        #7a7468;
+  --rule:         rgba(21, 19, 15, 0.16);
+  --rule-strong:  rgba(21, 19, 15, 0.55);
+  --red:          #d9230f;
+  --red-soft:     rgba(217, 35, 15, 0.12);
+  --on-red:       #ffffff;
+  --code-bg:      #15130f;
+  --code-ink:     #ebe6da;
+  --code-muted:   #8e887c;
+  --selection:    #d9230f;
+
+
+  --font-sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --wrap: 80rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --top-h: 3.75rem;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  color-scheme: light;
+}
+
+@mixin dark-tokens {
+  --paper:        #121110;
+  --paper-2:      #1b1917;
+  --paper-glass:  rgba(18, 17, 16, 0.82);
+  --ink:          #ece7dc;
+  --ink-2:        #bdb6a9;
+  --muted:        #8e887c;
+  --rule:         rgba(236, 231, 220, 0.14);
+  --rule-strong:  rgba(236, 231, 220, 0.5);
+  --red:          #ff5a4e;
+  --red-soft:     rgba(255, 90, 78, 0.14);
+  --on-red:       #121110;
+  --code-bg:      #0b0a09;
+  --code-ink:     #ece7dc;
+  --code-muted:   #7f7a70;
+  --selection:    #ff5a4e;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { @include dark-tokens; }
+}
+:root[data-theme="dark"] { @include dark-tokens; }

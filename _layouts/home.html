@@ -1,0 +1,68 @@
+---
+layout: default
+---
+{% assign author = site.data.authors[page.author] | default: site.data.authors['default'] %}
+{% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
+{% assign first_year = site.data.experience | map: "year" | sort | first %}
+{% assign readme = site.pages | where: "menutitle", "Readme" | first %}
+
+<section class="opening" aria-label="Introduction" data-hero>
+    <p class="opening-line">I build trusted AI for industries that cannot afford a wrong answer, and the engineering teams that keep it running.</p>
+    <p class="opening-sub">{{ author.role }}, Lausanne. Dad, triathlete, Ironman finisher. <span class="opening-links">{% include social-links.html author=author compact=true %}</span></p>
+    <p class="opening-hint" aria-hidden="true">The trace below is live. Scroll and it reacts.</p>
+</section>
+
+<section id="now" class="part" aria-labelledby="now-h">
+    <h2 id="now-h" class="part-h">Now</h2>
+    <div class="part-body prose-strip">
+        {{ content }}
+    </div>
+</section>
+
+<section id="before" class="part" aria-labelledby="before-h">
+    <h2 id="before-h" class="part-h">Before</h2>
+    <div class="part-body">
+        <p class="part-lead">{{ first_year }} to today. Six places, in reverse.</p>
+        {% for job in site.data.experience %}
+        <article class="job{% if job.current %} is-now{% endif %}">
+            <p class="job-when">{{ job.year }}</p>
+            <div class="job-body">
+                <h3 class="job-h">{{ job.company }} <span class="job-where">{{ job.location }}</span></h3>
+                <p class="job-roles">{% for role in job.roles %}<span>{{ role.title }}, {{ role.period }}</span>{% endfor %}</p>
+                {% if job.summary %}<p>{{ job.summary }}</p>{% endif %}
+                {% if job.link %}<p><a href="{{ job.link.url }}">{{ job.link.text }}</a></p>{% endif %}
+                {% if job.highlights %}
+                <details class="job-more">
+                    <summary>What I did there</summary>
+                    <ul>{% for h in job.highlights %}<li>{{ h }}</li>{% endfor %}</ul>
+                </details>
+                {% endif %}
+                {% if job.technologies %}<p class="job-tech">{{ job.technologies }}</p>{% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="writing" class="part" aria-labelledby="writing-h">
+    <h2 id="writing-h" class="part-h">Writing</h2>
+    <div class="part-body">
+        <ul class="pieces">
+            {% for post in posts %}
+            <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %Y" }}</time></li>
+            {% endfor %}
+        </ul>
+        <p class="part-note"><a href="{{ '/feed.xml' | relative_url }}">RSS</a></p>
+    </div>
+</section>
+
+{% if readme %}
+<section id="readme" class="part" aria-labelledby="readme-h">
+    <h2 id="readme-h" class="part-h">Readme</h2>
+    <div class="part-body">
+        <p class="quote">We trust each other. You're very good at your job. I'm not very good at your job. We win together, we fail together.</p>
+        <p>A user manual for working with me. <a href="{{ readme.url | relative_url }}">Read it.</a></p>
+    </div>
+</section>
+{% endif %}
+

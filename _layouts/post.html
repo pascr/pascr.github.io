@@ -1,30 +1,23 @@
 ---
 layout: default
 ---
-<main class="content" role="main">
-    <article class="post single-post" itemscope itemtype="http://schema.org/BlogPosting">
-
-        <header class="post-header short-diver">
-            <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
-            <section class="post-meta">
-                <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time> 
-                on
-                {% for tag in page.tags limit:5 %}
-                <span>{{ tag }}</span>
-                {% endfor %}
-            </section>
-        </header>
-
-        <section class="post-content short-diver" itemprop="articleBody">
-            {{content}}
-        </section>
-
-        <footer class="post-footer"> 
-            {% include authorinfo.html param=page.author %}
-        </footer>
-
-    </article>
-</main>
-
-{% include photoswipe.html %}
-{% include post_scripts.html %}
+{% assign author = site.data.authors[page.author] | default: site.data.authors['default'] %}
+{% assign words = content | strip_html | number_of_words %}
+{% assign minutes = words | divided_by: 200 | at_least: 1 %}
+<article class="piece" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="piece-head" data-reveal>
+        <p class="piece-kicker"><a href="{{ '/blog/' | relative_url }}">Writing</a> · <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%B %Y" }}</time> · {{ minutes }} min</p>
+        <h1 class="piece-title" itemprop="name headline">{{ page.title }}</h1>
+    </header>
+    <div class="prose" itemprop="articleBody">
+        {{ content }}
+        {% if page.linkedin_url %}<p class="piece-source">First published on <a href="{{ page.linkedin_url }}">LinkedIn</a>.</p>{% endif %}
+    </div>
+    <footer class="piece-foot">
+        <p class="piece-by">By <a href="{{ '/' | relative_url }}" itemprop="author">{{ author.name }}</a>, {{ author.role }}.</p>
+        <nav class="piece-nav" aria-label="More posts">
+            {% if page.previous %}<a href="{{ page.previous.url | relative_url }}" rel="prev">Older: {{ page.previous.title }}</a>{% endif %}
+            {% if page.next %}<a href="{{ page.next.url | relative_url }}" rel="next">Newer: {{ page.next.title }}</a>{% endif %}
+        </nav>
+    </footer>
+</article>

@@ -1,0 +1,21 @@
+// Rouge token colors, tuned for the dark code surface.
+.highlight {
+  .c, .c1, .cm, .cp, .cs, .ch, .cd { color: var(--code-muted); font-style: italic; }
+  .err { color: inherit; background: none; }
+  .k, .kc, .kd, .kn, .kp, .kr, .kv { color: #ff8a7a; }
+  .kt, .nc, .nn { color: #ffc98a; }
+  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss, .dl { color: #b5d99c; }
+  .m, .mb, .mf, .mh, .mi, .il, .mo, .mx { color: #f0c674; }
+  .na, .nb, .bp, .nd, .ne, .nf, .fm, .nl, .nx, .py { color: #9ec5e8; }
+  .nv, .vc, .vg, .vi, .vm { color: #d7bfff; }
+  .nt { color: #ff8a7a; }
+  .no, .ni { color: #ffc98a; }
+  .o, .ow, .p, .pi { color: var(--code-ink); }
+  .gp { color: var(--code-muted); user-select: none; }
+  .gd { color: #ff8a7a; }
+  .gi { color: #b5d99c; }
+  .ge { font-style: italic; }
+  .gs { font-weight: 600; }
+  .gu, .gh { color: #ffc98a; font-weight: 600; }
+  .w { color: inherit; }
+}

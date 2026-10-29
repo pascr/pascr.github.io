@@ -1,0 +1,89 @@
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  padding: 0.6rem 0.9rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  &:focus { top: 1rem; }
+}
+
+// Reading progress hairline, driven by --progress from site.js.
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 150;
+  pointer-events: none;
+  display: none;
+  span {
+    display: block;
+    height: 100%;
+    background: var(--red);
+    transform-origin: 0 50%;
+    transform: scaleX(var(--progress, 0));
+  }
+}
+.layout-post .progress, .layout-page .progress { display: block; }
+
+// Scroll reveal. Only active when JS is running; motion-sensitive users see content immediately.
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(0.9rem);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  &.is-in { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; transform: none; }
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.25rem;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+  .button-arrow { transition: transform 0.25s var(--ease); }
+  &:hover, &:focus-visible {
+    background: var(--ink);
+    color: var(--paper);
+    .button-arrow { transform: translateX(0.3rem); }
+  }
+}
+
+.tags {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+  color: var(--muted);
+}
+
+.sep { color: var(--rule-strong); margin: 0 0.5rem; }
+
+.social {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  &--compact {
+    display: inline-flex;
+    gap: 0;
+    li + li::before { content: "/"; color: var(--red); margin: 0 0.5rem; }
+  }
+}

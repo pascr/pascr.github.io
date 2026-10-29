@@ -1,0 +1,122 @@
+# Career timeline, newest first. Rendered by _includes/experience.html.
+# Each entry: company, location, year (big numeral), roles (period + title), summary, highlights, link.
+- company:  Visium SA
+  location: Lausanne, Switzerland
+  year:     2022
+  current:  true
+  roles:
+    - period: "04.2026 → today"
+      title:  CTO & Partner
+    - period: "06.2022 → 04.2026"
+      title:  Engineering Director & Partner
+  summary: >-
+    Leading Visium's transformation into a product-driven AI organization, directing engineering teams
+    building production-grade LLM-native systems, agentic workflows and NLU-powered conversational agents.
+    Responsible for technical vision, reliability standards, and delivering scalable GenAI solutions to
+    enterprise clients.
+  highlights:
+    - Driving the shift toward a product-oriented model, identifying and standardizing reusable assets, and implementing a scalable technology and product roadmap.
+    - Championing the adoption of Generative AI and next-generation AI capabilities, ensuring Visium stays ahead in the evolving AI landscape.
+    - Establishing best-in-class engineering practices through MLOps frameworks, CI/CD automation, cloud-native architectures, and modern software development standards.
+    - Scaling engineering operations by structuring teams, optimizing delivery processes, and mentoring future leaders to sustain a high-performance culture.
+    - Architected bidirectional streaming pipelines and real-time agentic orchestration systems, ensuring low-latency, high-reliability performance in production environments.
+  technologies: Agentic and Generative AI, NLU, LLMs, RAG, Agno, Python, FastAPI, TypeScript, React, MLOps, Kubernetes, Terraform, Pulumi, AWS, GCP, Azure
+
+- company:  ZF Group
+  location: Bern, Switzerland
+  year:     2021
+  roles:
+    - period: "08.2021 → 06.2022"
+      title:  Director of Product Engineering
+  summary: >-
+    Transitioning the Bestmile engineering teams and technology into a new home.
+    Following the acquisition of the Bestmile IP and hiring of Bestmile's engineering teams,
+    ensuring a smooth and happy transition for individuals and efficient integration of the
+    products into the ZF digital portfolio.
+  link:
+    text: "Bestmile's technology was acquired by ZF Group"
+    url:  https://press.zf.com/press/en/releases/release_32320.html
+  technologies: Scala, Akka, Kafka, Kubernetes, Docker, Postgres, MongoDB, AWS, gRPC, DDD, Event-storming, Serverless, Python, NodeJS, Go, Terraform, Helm, Bash, Spark, Sagemaker
+
+- company:  Bestmile
+  location: Lausanne, Switzerland
+  year:     2017
+  roles:
+    - period: "03.2017 → 10.2021"
+      title:  Director of Engineering
+  summary: >-
+    Designing and leading the development of the world's first cloud platform for the operation
+    and optimization of autonomous vehicle fleets, allowing the management of mixed fleets composed
+    of vehicles of different types and brands, and hybrid fleets of both autonomous and human-driven vehicles.
+  highlights:
+    - Oversaw all aspects of engineering operations and the architecture and design of the platform from a software engineering and cloud infrastructure point of view.
+    - Shaped the agile mindset of the company in both quality and delivery by defining and adapting the process from feature inception to deployment across teams and technologies.
+    - Contributed to the product strategy and roadmap, following market and investors' requirements.
+    - Coordinated the development of new features from inception to maintenance, working closely with internal and external stakeholders such as customers, product managers and the delivery teams.
+    - Introduced the "you build it; you run it" philosophy, enabling teams to own the delivery of their code up to production through continuous delivery pipelines.
+    - Defined engineering KPIs to measure team engagement, velocity, and quality of deliveries.
+    - Initiated the migration to Infrastructure-as-Code of the entire cloud infrastructure.
+    - Managed multiple integration projects with external partners.
+    - Introduced Domain-Driven Design and event-storming techniques to identify and scope micro-services responsibilities with their respective domain events used for communication.
+    - Organically grew the team from 1 to 12 engineers.
+    - Followed the development of team members through one-to-ones and OKRs.
+    - Encouraged a continuous learning and knowledge-sharing culture among the teams.
+    - Actively participated in 3 funding rounds and due diligence processes.
+  technologies: Scala, Akka, Kafka, Kubernetes, Docker, Postgres, MongoDB, AWS, Azure, GCP, gRPC, DDD, Event-storming, Serverless, Python, NodeJS, Go, Terraform, Helm, Bash, Spark, Sagemaker, Vehicle SDKs, OEM APIs
+
+- company:  Easel TV
+  location: London, United Kingdom
+  year:     2014
+  roles:
+    - period: "06.2014 → 03.2017"
+      title:  Head of Technology / Lead Software Engineer
+  summary: >-
+    Designing and leading the development of the new generation of reactive SaaS multi-screen
+    video platform based on Scala, Play and Akka, running on AWS and Azure.
+  highlights:
+    - Transformed the initial incomplete EventSource based platform prototype into a fully functional, maintainable and scalable product using Play, Akka-persistence, Akka and Slick.
+    - Introduced the initial management dashboard based on Play and evolved it to an AngularJS single page app.
+    - Designed and developed the playlist management system and platform recommendation engine based on Neo4J and ElasticSearch as well as simple rule based filtering algorithms.
+    - Designed and implemented the automated video ingestion workflows allowing to securely (DRM) encode, encrypt and publish premium content videos by integrating different Azure services.
+    - Defined and implemented internal and external REST APIs of the platform.
+    - Designed a component to dynamically serve on-demand re-sized images in a non-blocking way, integrated with AWS CloudFront and S3.
+    - Migrated and transformed legacy Java services to Scala based web services.
+    - Actively promoted the use of reactive and functional programming patterns within the team.
+    - Introduced an SRE/DevOps mindset through infrastructure as code to provision and deploy the cloud infrastructure.
+    - Organically grew the team from 2 to 10 engineers.
+    - Mentored team members by means of pairing and code reviews.
+    - Encouraged a continuous learning and knowledge sharing culture among the team by means of regular presentations and tech lunches.
+    - Directed the implementation of testing strategies for the product code base, including unit, integration and acceptance testing.
+    - Introduced code reviews into the development workflow to enhance code quality and improve knowledge sharing.
+    - Implemented and organized Agile processes as well as leading the different ceremonies such as sprint planning, retrospective and daily stand-up.
+  technologies: Scala, Play, Akka, Akka-Persistence, Slick, Sbt, ScalaTest, Spec2, Guice, JavaScript, AngularJS, NodeJS, Neo4j, ElasticSearch, MongoDB, Postgres, AWS, Azure
+
+- company:  SICPA Security Solutions SA
+  location: Lausanne, Switzerland
+  year:     2008
+  roles:
+    - period: "11.2008 → 06.2014"
+      title:  Software Engineer
+  summary: Building distributed Secure Track and Trace Systems for governments.
+  highlights:
+    - Developed a scalable RESTful API to securely authenticate and serve smartphone applications requests (Android and iOS) using Redis, JAX-RS, JBoss, JMS, JPA, MySQL, Oracle.
+    - Involved in all development phases of a real-time product aggregation system from solution requirements definition, software specifications, design, implementation, testing and on-site deployment. Led two developers based in Brazil for the backend implementation.
+    - Initiated and responsible for the adoption and migration to Git. Defined the workflows to be used during the development.
+  technologies: JEE6, Maven, Subversion, Spring, Hibernate, Guice, JBehave, Swing, Ruby, Rails, Grails, MongoDB, MySQL, MSSQL, JBoss, Tomcat, Jetty, Redis, JavaScript, Git, TDD, BDD, Puppet
+
+- company:  Bobst SA
+  location: Lausanne, Switzerland
+  year:     2004
+  roles:
+    - period: "2006 → 2008"
+      title:  Systems Engineer
+    - period: "2004 → 2006"
+      title:  Database & System Administrator
+  highlights:
+    - Introduced the Linux operating system within the IT department.
+    - Infrastructure automation using DevOps techniques on top of the UC4 multi-platform enterprise job planning system.
+    - Led the worldwide implementation of VMware Virtual Infrastructure 3.
+    - Completed a project for the migration of critical databases from Oracle 8i and 9i to Oracle 10g.
+    - IT administration of Unix, Windows and VMware ESX servers (more than 200).
+    - Implementation of a multi-platform and Open Source monitoring solution.
+  technologies: Linux, Unix, Virtualization, Oracle DB, Project management, Bash, VBScript
