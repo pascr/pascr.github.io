@@ -1,3 +1,31 @@
+---
+---
+# Everyone is welcome, search engines and AI crawlers alike.
 User-agent: *
-Disallow:
-Sitemap: https://sliceofcode.net/sitemap.xml
+Allow: /
+
+# AI crawlers, named so there is no ambiguity.
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: CCBot
+Allow: /
+
+Sitemap: {{ '/sitemap.xml' | absolute_url }}

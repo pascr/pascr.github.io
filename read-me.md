@@ -2,7 +2,7 @@
 layout:    page
 author:    pascr
 keywords:  about pascal rodriguez readme
-title:     Pascal Rodriguez's Readme
+title:     Readme
 menutitle: Readme
 kicker:    A user manual for working with me
 weight:    40

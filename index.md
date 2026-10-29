@@ -5,7 +5,7 @@ keywords:  about pascal rodriguez lausanne cto engineering ai
 title:     Pascal Rodriguez
 menutitle: About
 weight:    10
-excerpt:   Pascal Rodriguez, CTO at Visium in Lausanne. Curriculum vitae, writing and a personal user manual.
+excerpt:   Pascal Rodriguez, CTO & Partner at Visium in Lausanne. Trusted agentic AI for regulated industries. CV, writing and a personal readme.
 ---
 
 For the past 15 years, I've built and led engineering teams that ship resilient, high-quality software at scale. Today at Visium, I'm focused on a harder version of that problem: building AI systems that regulated industries can actually trust.

@@ -1,0 +1,55 @@
+---
+layout: null
+permalink: /llms-full.txt
+---
+{% assign a = site.data.authors['default'] %}
+{% assign home = site.pages | where: "url", "/" | first %}
+{% assign readme = site.pages | where: "menutitle", "Readme" | first %}
+# Pascal Rodriguez
+
+CTO & Partner, Visium SA, Lausanne, Switzerland.
+Site: {{ '/' | absolute_url }}
+LinkedIn: https://www.linkedin.com/in/{{ a.linkedin }}
+GitHub: https://github.com/{{ a.github }}
+
+## About
+
+{{ home.content | markdownify | strip_html | strip | replace: "
+
+", "
+" }}
+
+## Experience
+
+{% for job in site.data.experience %}
+### {{ job.company }}, {{ job.location }}
+{% for role in job.roles %}- {{ role.title }}, {{ role.period }}
+{% endfor %}{% if job.summary %}
+{{ job.summary }}
+{% endif %}{% if job.highlights %}
+{% for h in job.highlights %}- {{ h }}
+{% endfor %}{% endif %}{% if job.technologies %}
+Stack: {{ job.technologies }}
+{% endif %}
+{% endfor %}
+## Education
+
+- Bachelor of Science in Software Engineering, University of Applied Sciences Western Switzerland (HES-SO), 2004 to 2008, evening studies alongside full-time work.
+- Swiss Federal Certificate in Computer Science, 2000 to 2004.
+
+## Languages
+
+French (native), English (full professional), Spanish and German (elementary).
+
+## Off the clock
+
+Dad, triathlete and Ironman finisher. Mentor to engineering leaders through Plato and The Mentoring Club since 2020.
+
+## Readme: a user manual for working with me
+
+{{ readme.content | markdownify | strip_html | strip }}
+
+## Writing
+
+{% for post in site.posts %}{% unless post.draft %}- {{ post.title }} ({{ post.date | date: "%B %Y" }}): {{ post.url | absolute_url }}
+{% endunless %}{% endfor %}

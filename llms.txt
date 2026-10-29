@@ -1,0 +1,24 @@
+---
+layout: null
+permalink: /llms.txt
+---
+{% assign a = site.data.authors['default'] %}
+# Pascal Rodriguez
+
+> CTO & Partner at Visium SA in Lausanne, Switzerland. Builds trusted agentic AI for regulated industries (life sciences, pharma, biotech) and leads the engineering teams that run it. Twenty-two years in software; before Visium, Director of Engineering at Bestmile through its acquisition by ZF Group. Dad, triathlete, Ironman finisher.
+
+Canonical site: {{ '/' | absolute_url }}
+Full profile in Markdown: {{ '/llms-full.txt' | absolute_url }}
+
+## Pages
+
+- [Home, CV and profile]({{ '/' | absolute_url }}): who I am, what I do now, career chronology.
+- [Readme]({{ '/readme/' | absolute_url }}): a user manual for working with me.
+- [Writing]({{ '/blog/' | absolute_url }}): essays on engineering leadership and AI.
+- [RSS feed]({{ '/feed.xml' | absolute_url }})
+- [Posts as JSON]({{ '/api/posts.json' | absolute_url }})
+
+## Elsewhere
+
+- LinkedIn: https://www.linkedin.com/in/{{ a.linkedin }}
+- GitHub: https://github.com/{{ a.github }}
