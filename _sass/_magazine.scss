@@ -2,8 +2,8 @@
 .mag {
   --page: #ffffff;
   --text: #141414;
-  --text-2: #4b4b4b;
-  --faint: #8a8a8a;
+  --text-2: #3a3a3a;
+  --faint: #6f6f6f;
   --hair: rgba(20, 20, 20, 0.14);
   --lake: #1f4e79;
   --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
@@ -12,9 +12,11 @@
   background: var(--page);
   color: var(--text);
   font-family: var(--font-text);
-  font-size: 1.125rem;
-  line-height: 1.5;
-  font-feature-settings: "onum", "pnum", "liga";
+  font-size: 1.1875rem;
+  font-weight: 460;
+  line-height: 1.55;
+  font-feature-settings: "pnum", "liga";
+  -webkit-font-smoothing: auto;
   display: block;
 
   // the hero's living line, in the page's own colours
@@ -30,8 +32,8 @@
 @mixin mag-dark {
   --page: #101010;
   --text: #ece9e2;
-  --text-2: #b9b5ad;
-  --faint: #7d7a74;
+  --text-2: #cfcbc3;
+  --faint: #9a968f;
   --hair: rgba(236, 233, 226, 0.16);
   --lake: #8fb8de;
   --ink: #ece9e2; --red: #8fb8de; --paper: #101010;
@@ -67,7 +69,7 @@
   justify-content: center;
   padding: clamp(2rem, 5vw, 5rem) clamp(1.25rem, 4vw, 3.5rem) clamp(2rem, 5vw, 4rem);
 }
-.cover-eyebrow { font-style: italic; color: var(--text-2); margin: 0 0 1.5rem; }
+.cover-eyebrow { font-style: italic; color: var(--text-2); margin: 0 0 1.5rem; font-size: 1.125rem; }
 .cover-title {
   font-family: var(--font-display);
   font-weight: 400;
@@ -79,7 +81,7 @@
   em { font-style: italic; }
 }
 .cover-signal { height: clamp(5rem, 11vw, 9rem); margin: 1.5rem -0.5rem 1rem; canvas { width: 100%; height: 100%; display: block; } }
-.cover-standfirst { max-width: 46ch; color: var(--text-2); margin: 0 0 1.25rem; font-size: 1.0625rem; }
+.cover-standfirst { max-width: 46ch; color: var(--text); margin: 0 0 1.25rem; font-size: 1.1875rem; }
 .cover-links { margin: 0; .social { display: inline-flex; gap: 0; } .social li + li::before { content: "·"; color: var(--faint); margin: 0 0.6rem; } .social a { text-decoration: none; font-style: italic; } .social a:hover { text-decoration: underline; } }
 .cover-photo {
   position: relative;
@@ -94,7 +96,7 @@
 .spread { padding: clamp(3rem, 7vw, 6rem) clamp(1.25rem, 4vw, 3.5rem); border-top: 1px solid var(--hair); }
 .spread-head { display: flex; align-items: baseline; gap: 1.5rem; flex-wrap: wrap; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
 .spread-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, calc(1.4rem + 2vw), 3.5rem); letter-spacing: -0.01em; margin: 0; }
-.spread-deck { margin: 0; font-style: italic; color: var(--text-2); }
+.spread-deck { margin: 0; font-style: italic; color: var(--text-2); font-size: 1.125rem; }
 
 .spread--profile .spread-body {
   display: grid;
@@ -115,34 +117,34 @@
   line-height: 0.8;
   padding: 0.08em 0.12em 0 0;
 }
-.plate { margin: 0; img { width: 100%; height: auto; display: block; } figcaption { margin-top: 0.6rem; font-size: 0.9375rem; font-style: italic; color: var(--text-2); } }
+.plate { margin: 0; img { width: 100%; height: auto; display: block; } figcaption { margin-top: 0.6rem; font-size: 1rem; font-style: italic; color: var(--text-2); } }
 .plate--tall img { aspect-ratio: 4 / 5; object-fit: cover; }
-.bleed { margin: 0; img { width: 100%; height: clamp(18rem, 56vh, 40rem); object-fit: cover; display: block; } figcaption { padding: 0.6rem clamp(1.25rem, 4vw, 3.5rem) 0; font-size: 0.9375rem; font-style: italic; color: var(--text-2); } }
+.bleed { margin: 0; img { width: 100%; height: clamp(18rem, 56vh, 40rem); object-fit: cover; display: block; } figcaption { padding: 0.6rem clamp(1.25rem, 4vw, 3.5rem) 0; font-size: 1rem; font-style: italic; color: var(--text-2); } }
 
 // Chronology
 .chrono { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: clamp(2rem, 4vw, 3.5rem) clamp(2rem, 5vw, 4rem); }
 .entry { break-inside: avoid; }
-.entry-year { font-family: var(--font-display); font-style: italic; font-size: 3rem; line-height: 1; margin: 0 0 0.5rem; color: var(--text); }
+.entry-year { font-family: var(--font-display); font-style: italic; font-weight: 600; font-size: 3rem; line-height: 1; margin: 0 0 0.5rem; color: var(--text); }
 .entry.is-current .entry-year { color: var(--lake); }
-.entry-company { font-family: var(--font-text); font-weight: 500; font-size: 1.25rem; margin: 0 0 0.5rem; font-variant-caps: all-small-caps; letter-spacing: 0.04em; }
+.entry-company { font-family: var(--font-text); font-weight: 600; font-size: 1.375rem; margin: 0 0 0.5rem; }
 .entry-loc { font-weight: 400; color: var(--text-2); }
-.entry-roles { list-style: none; padding: 0; margin: 0 0 0.75rem; li { margin: 0.15rem 0; } em { color: var(--text-2); margin-right: 0.5rem; } }
-.entry-summary { margin: 0 0 0.75rem; color: var(--text-2); text-wrap: pretty; }
+.entry-roles { list-style: none; padding: 0; margin: 0 0 0.75rem; li { margin: 0.15rem 0; font-weight: 500; } em { color: var(--text-2); margin-right: 0.5rem; font-weight: 460; } }
+.entry-summary { margin: 0 0 0.75rem; color: var(--text); text-wrap: pretty; }
 .entry-link { margin: 0 0 0.75rem; font-style: italic; }
 .entry-more { margin: 0.5rem 0 0.75rem; summary { cursor: pointer; font-style: italic; color: var(--lake); list-style: none; } summary::-webkit-details-marker { display: none; } summary::after { content: " ↓"; } &[open] summary::after { content: " ↑"; } }
-.entry-notes { margin: 0.75rem 0 0; padding-left: 1.25rem; font-size: 0.9375rem; color: var(--text-2); li { margin: 0.35rem 0; } }
-.entry-tech { margin: 0; font-size: 0.9375rem; color: var(--faint); em { color: var(--text-2); } }
+.entry-notes { margin: 0.75rem 0 0; padding-left: 1.25rem; font-size: 1.0625rem; color: var(--text); li { margin: 0.4rem 0; } }
+.entry-tech { margin: 0; font-size: 1rem; color: var(--text-2); em { color: var(--text); } }
 
 // Writing as a contents page
 .contents { list-style: none; padding: 0; margin: 0; max-width: 56rem; counter-reset: piece;
   li { counter-increment: piece; border-top: 1px solid var(--hair); }
   li:last-child { border-bottom: 1px solid var(--hair); }
   a { display: flex; align-items: baseline; gap: 1rem; padding: 1rem 0; text-decoration: none; }
-  a::before { content: counter(piece, upper-roman); font-family: var(--font-display); font-style: italic; min-width: 2.5rem; color: var(--faint); }
+  a::before { content: counter(piece, upper-roman); font-family: var(--font-display); font-style: italic; font-weight: 600; min-width: 2.5rem; color: var(--text-2); }
   a:hover .contents-title { color: var(--lake); font-style: italic; }
   time { color: var(--text-2); white-space: nowrap; }
 }
-.contents-title { font-size: 1.25rem; font-weight: 500; }
+.contents-title { font-size: 1.3125rem; font-weight: 560; }
 .contents-leader { flex: 1; border-bottom: 1px dotted var(--faint); transform: translateY(-0.35em); }
 
 // Readme as a plate with a quotation
@@ -153,15 +155,15 @@
   place-items: center;
   overflow: hidden;
   img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  &::after { content: ""; position: absolute; inset: 0; background: rgba(8, 14, 20, 0.42); }
+  &::after { content: ""; position: absolute; inset: 0; background: rgba(8, 14, 20, 0.58); }
 }
 .plate-quote-text { position: relative; z-index: 1; max-width: 60rem; padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 3.5rem); color: #fff; text-align: center;
   blockquote { margin: 0 0 1.5rem; }
   p { font-family: var(--font-display); font-style: italic; font-size: clamp(1.75rem, calc(1.2rem + 2.6vw), 3.75rem); line-height: 1.15; margin: 0; text-wrap: balance; }
-  .plate-quote-note { font-family: var(--font-text); font-style: normal; font-size: 1.0625rem; a { color: #fff; text-decoration-color: #fff; } }
+  .plate-quote-note { font-family: var(--font-text); font-style: normal; font-size: 1.1875rem; a { color: #fff; text-decoration-color: #fff; } }
 }
 
-.colophon { padding: 2.5rem clamp(1.25rem, 4vw, 3.5rem) 3rem; border-top: 1px solid var(--hair); font-size: 0.9375rem; color: var(--text-2);
+.colophon { padding: 2.5rem clamp(1.25rem, 4vw, 3.5rem) 3rem; border-top: 1px solid var(--hair); font-size: 1.0625rem; color: var(--text-2);
   p { margin: 0 0 0.5rem; } .social { display: inline-flex; gap: 0; } .social li + li::before { content: "·"; margin: 0 0.5rem; } .social a { text-decoration: none; } }
 
 .mag .progress { display: none; }
