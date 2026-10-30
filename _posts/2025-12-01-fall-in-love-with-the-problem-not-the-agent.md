@@ -4,6 +4,7 @@ date:         2025-12-01 11:43:00
 category:     Leadership
 tags:         [agentic-ai, adoption, product]
 linkedin_url: https://www.linkedin.com/in/pascr/recent-activity/all/
+image:        /assets/social/fall-in-love-with-the-problem-not-the-agent.png
 excerpt:      Most AI agent projects fail for the same reason. The technology works, the demos shine, and nobody uses them.
 ---
 

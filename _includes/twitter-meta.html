@@ -1,7 +1,9 @@
 {% assign author = site.data.authors[page.author] | default: site.data.authors['default'] %}
-{% assign cover = page.cover | default: site.cover %}
+{% assign cover = page.image | default: page.cover | default: site.cover %}
 <meta name="twitter:card" content="summary_large_image">
-{% if author.twitter %}<meta name="twitter:site" content="@{{ author.twitter }}">{% endif %}
-<meta name="twitter:title" content="{{ page.title | default: site.title | escape }}">
-<meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
-{% if cover %}<meta name="twitter:image" content="{{ cover | absolute_url }}">{% endif %}
+<meta name="twitter:site" content="@{{ author.twitter }}">
+<meta name="twitter:creator" content="@{{ author.twitter }}">
+<meta name="twitter:title" content="{% if page.url == '/' %}Pascal Rodriguez, CTO & Partner at Visium{% else %}{{ page.title | default: site.title | escape }}{% endif %}">
+<meta name="twitter:description" content="{{ page.excerpt | default: site.description | strip_html | strip_newlines | truncate: 200 }}">
+<meta name="twitter:image" content="{{ cover | absolute_url }}">
+<meta name="twitter:image:alt" content="{% if page.layout == 'post' %}{{ page.title | escape }}, by Pascal Rodriguez{% else %}Pascal Rodriguez, CTO & Partner at Visium, Lausanne{% endif %}">

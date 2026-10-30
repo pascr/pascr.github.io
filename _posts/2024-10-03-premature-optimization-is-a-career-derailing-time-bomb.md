@@ -4,6 +4,7 @@ date:         2024-10-03 08:00:00
 category:     Engineering
 tags:         [architecture, simplicity, yagni]
 linkedin_url: https://www.linkedin.com/in/pascr/recent-activity/all/
+image:        /assets/social/premature-optimization-is-a-career-derailing-time-bomb.png
 excerpt:      Ten years ago I inherited a system built on Event Sourcing to "scale". It served fifteen concurrent users on one server.
 ---
 

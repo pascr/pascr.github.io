@@ -4,6 +4,7 @@ date:         2024-10-31 10:30:00
 category:     Leadership
 tags:         [incidents, post-mortems, culture]
 linkedin_url: https://www.linkedin.com/in/pascr/recent-activity/all/
+image:        /assets/social/the-best-teams-embrace-what-others-run-from.png
 excerpt:      Don't fear failures. Transform them into strength.
 ---
 

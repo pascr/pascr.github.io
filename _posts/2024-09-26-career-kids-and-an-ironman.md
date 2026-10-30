@@ -4,6 +4,7 @@ date:         2024-09-26 07:00:00
 category:     Life
 tags:         [triathlon, balance, parenting]
 linkedin_url: https://www.linkedin.com/in/pascr/recent-activity/all/
+image:        /assets/social/career-kids-and-an-ironman.png
 excerpt:      Managing a career, kids and an intense training regimen is a whole new challenge. A few strategies I've learned along the way.
 ---
 

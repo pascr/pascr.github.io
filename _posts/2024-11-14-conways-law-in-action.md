@@ -4,6 +4,7 @@ date:         2024-11-14 12:00:00
 category:     Leadership
 tags:         [architecture, organisation, conways-law]
 linkedin_url: https://www.linkedin.com/in/pascr/recent-activity/all/
+image:        /assets/social/conways-law-in-action.png
 excerpt:      Your org chart might be shaping your software architecture more than you realize.
 ---
 

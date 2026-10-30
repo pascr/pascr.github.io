@@ -4,6 +4,7 @@ date:         2026-03-17 13:46:00
 category:     Engineering
 tags:         [ai-coding, craftsmanship, forge-cli]
 linkedin_url: https://www.linkedin.com/in/pascr/recent-activity/all/
+image:        /assets/social/vibe-gets-you-code-craft-gets-you-software.png
 excerpt:      LLMs optimize for output, not for engineering discipline. Forge CLI is a small experiment in making that discipline non-negotiable.
 ---
 

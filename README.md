@@ -26,6 +26,7 @@ Then open http://localhost:4000.
 | `_sass/_strip.scss` | The design: colours, type, the strip, the column and the pieces. |
 | `js/field.js` | The live seismograph strip at the bottom of every page. |
 | `js/site.js` | Theme toggle, scroll reveal, table of contents. |
+| `scripts/social_cards.js` | Renders the share images in `assets/social/`; run it after adding a post. |
 
 ## Importing LinkedIn posts
 

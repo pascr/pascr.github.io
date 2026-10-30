@@ -4,6 +4,7 @@ date:         2024-12-13 06:31:00
 category:     AI
 tags:         [responsible-ai, safety, genai]
 linkedin_url: https://www.linkedin.com/in/pascr/recent-activity/all/
+image:        /assets/social/what-makes-a-great-genai-safety-system.png
 excerpt:      Perfect metrics are like my quiet toddler, very suspicious. Safety is not flawless performance but how gracefully a system handles its failures.
 ---
 

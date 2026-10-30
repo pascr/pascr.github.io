@@ -3,7 +3,7 @@ default:
   initial:      pascr
   name:         "Pascal Rodriguez"
   role:         "CTO & Partner, Visium SA"
-  cover:        /assets/alps-cover.jpg
+  cover:        /assets/social/home.png
   picture:      /assets/pascr.jpg
   bio:          Building trusted AI, one slice at a time
   location:     Lausanne, Switzerland
@@ -17,7 +17,7 @@ pascr:
   initial:      pascr
   name:         "Pascal Rodriguez"
   role:         "CTO & Partner, Visium SA"
-  cover:        /assets/alps-cover.jpg
+  cover:        /assets/social/home.png
   picture:      /assets/pascr.jpg
   bio:          Building trusted AI, one slice at a time
   location:     Lausanne, Switzerland
